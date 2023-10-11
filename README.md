@@ -1,4 +1,5 @@
 Receipt Scanning Web Application for COEN 174.
+
 Team: Lydia Kim, Michelle Yavorskiy, Morgan Watts, Chloé Morali, Mark Pang, Alex Iosivas
 
 
