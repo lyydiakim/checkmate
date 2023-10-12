@@ -5,7 +5,7 @@ Team: Lydia Kim, Michelle Yavorskiy, Morgan Watts, Chloé Morali, Mark Pang, Ale
 Front End Dev: Next.js, Typescript, Tailwind CSS 
 
 
-## Getting Started
+## Getting Started 🎊
 
 To run the development server in terminal: 😸
 
