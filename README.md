@@ -2,12 +2,12 @@ Receipt Scanning Web Application for COEN 174.
 
 Team: Lydia Kim, Michelle Yavorskiy, Morgan Watts, Chloé Morali, Mark Pang, Alex Iosivas
 
+Front End Dev: Next.js, Typescript, Tailwind CSS 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-To run the development server:
+To run the development server in terminal: 😸
 
 ```bash
 npm run dev
