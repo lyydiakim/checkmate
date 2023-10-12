@@ -11,12 +11,6 @@ To run the development server in terminal: 😸
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Use [http://localhost:3000](http://localhost:3000) after run dev to see webpage.
