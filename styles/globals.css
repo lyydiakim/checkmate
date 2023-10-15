@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
-    overflow-x: hidden;
-    width: 100vw;
+@font-face {
+  font-family: "questrial";
+  src: url(../public/fonts/Questrial-Regular.woff2) format("woff2");
 }
 
+html {
+  font-family: questrial;
+  overflow-x: hidden;
+  width: 100vw;
+}

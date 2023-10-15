@@ -1,17 +1,9 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import UploadImage from "@/components/landing-page/UploadImage";
 
 export default function Home() {
   return (
-    <div>      
-      <Navbar/>  
-    
-      <Footer/>
+    <div className="">
+      <UploadImage />
     </div>
   );
 }
-
-
-
-
-
