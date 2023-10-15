@@ -15,4 +15,4 @@ npm run dev
 
 Use [http://localhost:3000](http://localhost:3000) after run dev to see webpage.
 
-Deployed on Vercel: checkmate-six.vercel.app
+Deployed on Vercel: http://checkmate-six.vercel.app
