@@ -9,6 +9,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    extend: {
+      //for gradient hover effect
+      backgroundSize: {
+        "size-200": "200% 200%",
+      },
+    },
+
     fontFamily: {
       // questrial: ['questrial', 'sans-serif'],
     },

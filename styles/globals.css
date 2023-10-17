@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "questrial";
-  src: url(../public/fonts/Questrial-Regular.woff2) format("woff2");
+  /* font-family: "questrial";
+  src: url(../public/fonts/Questrial-Regular.woff2) format("woff2"); */
+
+  font-family: "dm-sans";
+  src: url(../public/fonts/DMSans_18pt-Light.woff2) format("woff2");
+  src: url(../public/fonts/DMSans_18pt-ExtraLight.woff2) format("woff2");
 }
 
 html {
-  font-family: questrial;
+  font-family: dm-sans;
   overflow-x: hidden;
   width: 100vw;
 }
