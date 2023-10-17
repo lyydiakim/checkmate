@@ -1,7 +1,31 @@
 "use client";
 import { AiFillCamera } from "react-icons/ai";
+import {useState, useEffect} from 'react';
 import { BsArrowDownCircleFill } from "react-icons/bs";
 export default function UploadImage() {
+
+
+  const [apiResult, setApiResult] = useState('');
+
+  // 2. Use the effect hook to fetch data when the component mounts
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/test'); // Replace with your API endpoint
+        if (response.ok) {
+          const data = await response.json();
+          setApiResult(data.msg); // Assuming the API returns an object with a message property
+        } else {
+          console.error('Failed fetching data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="h-screen  text-white">
       <div className="w-100 flex flex-row">
@@ -26,6 +50,7 @@ export default function UploadImage() {
             </a>
           </button>
         </div>
+        <p id='result'>{apiResult}</p>
       </div>
     </div>
   );
