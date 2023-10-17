@@ -49,8 +49,8 @@ export default function UploadImage() {
               <AiFillCamera size={30} /> Upload Your Receipt
             </a>
           </button>
+          <p id='result'>{apiResult}</p>
         </div>
-        <p id='result'>{apiResult}</p>
       </div>
     </div>
   );
