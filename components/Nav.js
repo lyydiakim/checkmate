@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import logo from "@/public/images/logo2.png";
+import logo from "@/public/images/logodmsans.png";
 
 import React from "react";
 import { motion, useScroll } from "framer-motion";
@@ -18,13 +18,6 @@ const navStyles = {
   padding: "0 2rem",
   width: "100vw",
   left: "0",
-};
-
-const navLinksWrapper = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space between",
-  width: "50%",
 };
 
 export default function Nav() {
