@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import logo from "@/public/images/logo2.png";
+import logo from "@/public/images/logodmsans.png";
 
 export default function Footer() {
   return (
-    <div className="text-gray-300 max-sm:max-h-[450px] sm:px-[4.75rem] sm:py-[3.25rem] max-md:text-sm  md:max-h-[372px] md:px-[8.75rem] md:py-[6.25rem] w-screen">
+    <div className="text-gray-200 max-sm:max-h-[450px] sm:px-[4.75rem] sm:py-[3.25rem] max-md:text-sm  md:max-h-[372px] md:px-[8.75rem] md:py-[6.25rem] w-screen">
       <hr className="pb-[5%] " />
       <div className="flex lg:flex-row max-sm:flex-col max-sm:pl-[30%] max-sm:pb-[10%]">
         {/* Left Side Col */}
