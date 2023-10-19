@@ -45,7 +45,7 @@ export default function UploadImage() {
           type="file"
           id="chooseFile"
           title="Choose a File" // not working...
-          className=" mx-[25%] my-2 pt-4 pb-12 px-10 rounded-xl border-2
+          className=" mx-[25%] my-2 py-4 px-10 rounded-xl border-2
               transition-all duration-500 bg-gradient-to-br to-[#afdbd74b] via-[#427d784d] from-[#afdbd749] bg-size-200 hover:bg-right-bottom
             text-white text-xl 
             max-xl:mx-[20%]
