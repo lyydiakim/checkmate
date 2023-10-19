@@ -1,5 +1,5 @@
-import UploadImage from "@/components/landing-page/UploadImage";
-import OurService from "@/components/landing-page/OurService";
+import UploadImage from "@/app/landing-page/UploadImage";
+import OurService from "@/app/landing-page/OurService";
 
 export default function Home() {
   return (

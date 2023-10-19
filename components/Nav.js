@@ -53,7 +53,7 @@ export default function Nav() {
       style={navStyles}
       className="bg-gradient-to-b  from-[#7d7d7d4b] to-transparent"
     >
-      <a title="checkmates-logo" className="opacity-100" href="">
+      <a title="checkmates-logo" className="opacity-100" href="/">
         <Image className="w-[13rem]" src={logo} alt="logo" />
       </a>
       <div>
