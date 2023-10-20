@@ -9,6 +9,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xs: "430px",
+      // => @media (min-width: 640px) { ... }
+    },
+
     extend: {
       //for gradient hover effect
       backgroundSize: {
