@@ -37,9 +37,12 @@ export default function UploadImage() {
 
         "
       >
-        <p className="flex justify-center text-[1.7rem] max-sm:text-[1.5rem]  max-xs:text-[1rem]">
+        <p className="flex justify-center text-[1.7rem] max-sm:text-[1.3rem]">
           Upload Your Reciept Image Here
-          <BsArrowDownCircleFill size={35} className="pl-2 mt-1 inline" />
+          <BsArrowDownCircleFill
+            size={33}
+            className="pl-2 mt-1 max-sm:mt-0 inline"
+          />
         </p>
         <input
           type="file"
@@ -51,7 +54,6 @@ export default function UploadImage() {
             max-xl:mx-[20%]
             max-lg:mx-[20%] 
             max-md:mx-[10%] max-md:pb-4
-            max-xs:text-[1rem]
             "
         ></input>
       </div>
