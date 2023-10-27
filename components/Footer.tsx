@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import logo from "@/public/images/logodmsans.png";
 
@@ -26,7 +27,8 @@ export default function Footer() {
                 className="pr-2 inline-flex max-w-[2rem]"
                 size={40}
               />{" "}
-              contact@checkmates.com
+              contact@checkmates.com <br></br>
+              <Link href="../aboutus-page">About us</Link>
             </p>
           </a>
         </div>
