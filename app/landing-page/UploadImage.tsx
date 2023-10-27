@@ -37,21 +37,23 @@ export default function UploadImage() {
 
         "
       >
-        <p className="flex justify-center text-[1.7rem] max-sm:text-[1.5rem]">
+        <p className="flex justify-center text-[1.7rem] max-sm:text-[1.3rem]">
           Upload Your Reciept Image Here
-          <BsArrowDownCircleFill size={35} className="pl-2 mt-1 inline" />
+          <BsArrowDownCircleFill
+            size={33}
+            className="pl-2 mt-1 max-sm:mt-0 inline"
+          />
         </p>
         <input
           type="file"
           id="chooseFile"
-          title="Choose a File" // not working...
-          className=" mx-[25%] my-2 py-4 px-10 rounded-xl border-2
+          title="Choose a File" // not working... matgin bottom needs to be changed
+          className=" mx-[25%] my-2 py-4 pb-4 px-10 rounded-xl border-2
               transition-all duration-500 bg-gradient-to-br to-[#afdbd74b] via-[#427d784d] from-[#afdbd749] bg-size-200 hover:bg-right-bottom
             text-white text-xl 
             max-xl:mx-[20%]
             max-lg:mx-[20%] 
             max-md:mx-[10%] max-md:pb-4
-
             "
         ></input>
       </div>
