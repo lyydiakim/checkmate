@@ -8,7 +8,7 @@ export default function page() {
           max-xl:px-[17rem] 
           max-lg:px-[7rem] max-lg:py-[2rem]
           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
-        > We are an awesome group of software engineers! <br></br>
+        > We are an awesome group of software engineers! We LOVE coding and splitting expenses. <br></br>
         </p>
     </div>
   );
