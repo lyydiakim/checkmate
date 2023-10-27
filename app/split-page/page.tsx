@@ -8,9 +8,9 @@ export default function page() {
           max-xl:px-[17rem] 
           max-lg:px-[7rem] max-lg:py-[2rem]
           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
-        > Who are you splitting with?
-        </p>
+        > Who are you splitting with? <br></br>
         <Link href="../selecting-page">Testing Link to Share Page</Link>
+        </p>
     </div>
   );
 }

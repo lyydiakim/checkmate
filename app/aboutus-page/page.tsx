@@ -8,8 +8,7 @@ export default function page() {
           max-xl:px-[17rem] 
           max-lg:px-[7rem] max-lg:py-[2rem]
           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
-        > Please assign splitters to items. <br></br>
-        <Link href="../share-page">Testing Link to Share Page</Link>
+        > We are an awesome group of software engineers! <br></br>
         </p>
     </div>
   );
