@@ -1,4 +1,4 @@
-import UploadImage from "@/components/landing-page/UploadImage";
+import UploadImage from "@/app/landing-page/UploadImage";
 
 export default function Home() {
   return (

@@ -51,19 +51,16 @@ export default function Nav() {
       animate={hidden ? "hidden" : "visible"}
       transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.6 }}
       style={navStyles}
+      className="bg-gradient-to-b  from-[#7d7d7d4b] to-transparent"
     >
-      <a
-        title="checkmates-logo"
-        className="opacity-90  hover:opacity-100 transition"
-        href=""
-      >
+      <a title="checkmates-logo" className="opacity-100" href="/">
         <Image className="w-[13rem]" src={logo} alt="logo" />
       </a>
       <div>
         {linkList.map((item, i) => (
           <a
             key={i}
-            className="hover:text-white text-gray-300 text-2xl"
+            className="hover:text-white  text-gray-300 text-2xl"
             href=""
           >
             About Us
