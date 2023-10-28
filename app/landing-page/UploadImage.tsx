@@ -47,10 +47,10 @@ export default function UploadImage() {
         <input
           type="file"
           id="chooseFile"
-          title="Choose a File" // not working... matgin bottom needs to be changed
-          className=" mx-[25%] my-2 py-4 pb-4 px-10 rounded-xl border-2
+          title="Choose a File"
+          className=" mx-[25%] my-2 py-4 pb-11 px-10 rounded-xl border-2
               transition-all duration-500 bg-gradient-to-br to-[#afdbd74b] via-[#427d784d] from-[#afdbd749] bg-size-200 hover:bg-right-bottom
-            text-white text-xl 
+            text-white text-xl
             max-xl:mx-[20%]
             max-lg:mx-[20%] 
             max-md:mx-[10%] max-md:pb-4
