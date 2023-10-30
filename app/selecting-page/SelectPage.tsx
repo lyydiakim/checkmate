@@ -2,7 +2,7 @@
 import Image from "next/image";
 import receipt from "@/public/images/receiptex.jpeg";
 import { BsImage } from "react-icons/bs";
-import { FiArrowRightCircle } from "react-icons/Fi";
+// import { FiArrowRightCircle } from "react-icons/Fi";
 import { PiUserCircleFill } from "react-icons/Pi";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ export default function page() {
             href="../share-page"
           >
             Continue
-            <FiArrowRightCircle className="inline ml-2" />
+            <PiUserCircleFill className="inline ml-2" />
           </Link>
         </div>
       </div>
