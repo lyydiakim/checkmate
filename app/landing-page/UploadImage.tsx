@@ -1,14 +1,15 @@
 "use client";
-import { AiFillCamera } from "react-icons/ai";
-import { BsArrowDownCircleFill } from "react-icons/bs";
-import React, { useState } from "react";
 
-export default function UploadImage() {
-  function uploadImage() {
-    $("button").on("click", function () {
-      $("input").trigger("click");
-    });
-  }
+import { BsArrowDownCircleFill } from "react-icons/bs";
+import React from "react";
+
+import { SingleImageDropzone } from "@/components/SingleImageDropzone";
+import { useEdgeStore } from "@/lib/edgestore";
+import { useState } from "react";
+
+export default function SingleImageDropzoneUsage() {
+  const [file, setFile] = useState<File>();
+  const { edgestore } = useEdgeStore();
 
   return (
     <div
@@ -44,18 +45,34 @@ export default function UploadImage() {
           />
         </p>
 
-        <input
-          type="file"
-          id="chooseFile"
-          title="Choose a File" // not working... matgin bottom needs to be changed
-          className=" mx-[25%] my-2 pt-4 pb-12 px-10 rounded-xl border-2
-              transition-all duration-500 bg-gradient-to-br to-[#afdbd74b] via-[#427d784d] from-[#afdbd749] bg-size-200 hover:bg-right-bottom
-            text-white text-xl
-            max-xl:mx-[20%]
-            max-lg:mx-[20%] max-md:pb-4
-            max-md:mx-[10%]
-            "
-        ></input>
+        <div className="flex justify justify-center flex-col mt-4">
+          <SingleImageDropzone
+            width={400}
+            height={400}
+            value={file}
+            onChange={(file) => {
+              setFile(file);
+            }}
+          />
+          <button
+            onClick={async () => {
+              if (file) {
+                const res = await edgestore.publicFiles.upload({
+                  file,
+                  onProgressChange: (progress) => {
+                    // you can use this to show a progress bar
+                    console.log(progress);
+                  },
+                });
+                // you can run some server action or api here
+                // to add the necessary data to your database
+                console.log(res);
+              }
+            }}
+          >
+            Upload
+          </button>
+        </div>
       </div>
     </div>
   );

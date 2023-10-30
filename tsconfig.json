@@ -20,7 +20,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@//*": ["../*"]
     }
   },
   "include": [
@@ -28,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "pages/api/upload.ts"
+    ".next/types/**/*.tsx"
+    // "pages/api/upload.ts"
   ],
   "exclude": ["node_modules"]
 }
