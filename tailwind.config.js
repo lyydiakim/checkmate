@@ -14,6 +14,11 @@ module.exports = {
       backgroundSize: {
         "size-200": "200% 200%",
       },
+      colors: {
+        'orange': '#ea580c',
+        'teal': '#2dd4bf',
+
+        },
     },
 
     fontFamily: {

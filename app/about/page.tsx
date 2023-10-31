@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { BsFillPersonFill } from "react-icons/bs"
-import OurService from "@/app/landing-page/OurService";
+import OurService from "@/app/about/OurService";
 export default function page() {
   return (
     <div>
@@ -43,6 +43,7 @@ export default function page() {
     </div>
 
     <OurService />
+    
     </div>
   );
 }

@@ -23,7 +23,6 @@ export default function OurService() {
           web app that scans your receipt and does all the math for you. Our
           product makes splitting receipts efficient, accurate, and fun!
         </p>
-        <Link href="../split-page">Testing Link to Split Page</Link>
       </div>
     </div>
   );
