@@ -28,7 +28,7 @@ export default function Footer() {
                 size={40}
               />{" "}
               contact@checkmates.com <br></br>
-              <Link href="../aboutus-page">About Us</Link>
+              <Link href="../about">About Us</Link>
             </p>
           </a>
         </div>
