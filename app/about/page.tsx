@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
+import OurService from "@/app/landing-page/OurService";
 export default function page() {
   return (
+    <div>
     <div className="flex h-screen flex-row text-black">
       <p
           className="text-center text-[1.4rem] py-[3rem] px-[22rem] 
@@ -10,6 +12,8 @@ export default function page() {
           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
         > We are an awesome group of software engineers! We LOVE coding and splitting expenses. <br></br>
         </p>
+    </div>
+    <OurService />
     </div>
   );
 }

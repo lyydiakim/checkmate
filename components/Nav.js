@@ -62,7 +62,7 @@ export default function Nav() {
           <Link
             key={i}
             className="hover:text-white  text-gray-300 text-2xl"
-            href="../about-us"
+            href="../about"
           >
             About Us
           </Link>
