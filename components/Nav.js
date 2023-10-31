@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logodmsans.png";
 
@@ -58,13 +59,13 @@ export default function Nav() {
       </a>
       <div>
         {linkList.map((item, i) => (
-          <a
+          <Link
             key={i}
             className="hover:text-white  text-gray-300 text-2xl"
-            href=""
+            href="../about"
           >
             About Us
-          </a>
+          </Link>
         ))}
       </div>
     </motion.nav>
