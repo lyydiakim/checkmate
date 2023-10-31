@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { EdgeStoreProvider } from "@/lib/edgestore";
 
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav.js";
@@ -19,7 +18,7 @@ export default function RootLayout({
     <html lang="en" className="bg-gradient-to-b from-cyan-950 to-cyan-900">
       <body className="font-questrial overflow-x-hidden w-screen">
         <Nav />
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
+        {children}
         <Footer />
       </body>
     </html>
