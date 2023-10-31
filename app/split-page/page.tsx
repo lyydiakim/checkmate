@@ -22,8 +22,8 @@
 "use client";
 import Image from "next/image";
 import receipt from "@/public/images/receiptex.jpeg";
-import { FiArrowRightCircle } from "react-icons/Fi";
-import { PiUserCircleFill } from "react-icons/Pi";
+import { ChevronRightCircle } from "lucide-react";
+import { UserCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export default function page() {
@@ -48,29 +48,20 @@ export default function page() {
           <div className=" pl-[5rem] ">
             <p className="mt-1">
               {" "}
-              <PiUserCircleFill
-                size={45}
-                className="inline text-blue-500 mr-4"
-              />
+              <UserCircle2 size={45} className="inline text-blue-500 mr-4" />
               Meesh Af
             </p>
           </div>
 
           <div className="pl-[5rem] ">
             <p className="mt-1">
-              <PiUserCircleFill
-                size={45}
-                className="inline text-green-500 mr-4"
-              />
+              <UserCircle2 size={45} className="inline text-green-500 mr-4" />
               Ice Spice Af
             </p>
           </div>
           <div className="pl-[5rem]">
             <p className="mt-1">
-              <PiUserCircleFill
-                size={45}
-                className="inline text-pink-500 mr-4"
-              />
+              <UserCircle2 size={45} className="inline text-pink-500 mr-4" />
               Princess Af
             </p>
           </div>
@@ -82,7 +73,7 @@ export default function page() {
             href="../share-page"
           >
             Continue
-            <FiArrowRightCircle className="inline ml-2" />
+            <ChevronRightCircle className="inline ml-2" />
           </Link>
         </div>
       </div>
