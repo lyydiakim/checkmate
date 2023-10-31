@@ -20,16 +20,16 @@ export default function Footer() {
         {/* Right Side Col */}
         <div className="max-sm:pt-10 max-sm:pl-0 max-md:pl-20 md:absolute md:right-[9rem] flex-col">
           <h1 className="pb-5 text-2xl font-semibold ">Contact Us</h1>
-          <a className="hover:text-white text-md" href="">
-            <p className="">
-              {" "}
-              <AiOutlineMail
-                className="pr-2 inline-flex max-w-[2rem]"
-                size={40}
-              />{" "}
-              contact@checkmates.com <br></br>
-            </p>
-          </a>
+
+          <p className="hover:text-white text-md">
+            {" "}
+            <AiOutlineMail
+              className="pr-2 inline-flex max-w-[2rem]"
+              size={40}
+            />{" "}
+            contact@checkmates.com
+          </p>
+          <Link href="../about">About Us</Link>
         </div>
       </div>
     </div>

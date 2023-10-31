@@ -58,15 +58,12 @@ export default function Nav() {
         <Image className="w-[13rem]" src={logo} alt="logo" />
       </a>
       <div>
-        {linkList.map((item, i) => (
-          <Link
-            key={i}
-            className="hover:text-white  text-gray-300 text-2xl"
-            href="../"
-          >
-            About Us
-          </Link>
-        ))}
+        <Link
+          className="hover:text-white  text-gray-300 text-2xl"
+          href="../about"
+        >
+          About Us
+        </Link>
       </div>
     </motion.nav>
   );

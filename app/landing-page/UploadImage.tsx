@@ -1,15 +1,14 @@
 "use client";
-
+import { AiFillCamera } from "react-icons/ai";
 import { BsArrowDownCircleFill } from "react-icons/bs";
-import React from "react";
 
-import { SingleImageDropzone } from "@/components/SingleImageDropzone";
-import { useEdgeStore } from "@/lib/edgestore";
-import { useState } from "react";
 
-export default function SingleImageDropzoneUsage() {
-  const [file, setFile] = useState<File>();
-  const { edgestore } = useEdgeStore();
+export default function UploadImage() {
+  function uploadImage() {
+    $("button").on("click", function () {
+      $("input").trigger("click");
+    });
+  }
 
   return (
     <div
@@ -19,10 +18,10 @@ export default function SingleImageDropzoneUsage() {
     >
       {/* Left */}
       <div
-        className="w-1/2  text-[4.5rem] px-[7rem] pt-[17rem] flex justify justify-center
-          max-xl:text-[4rem] max-xl:px-[4.5rem] max-xl:pt-[25%]
+        className="w-1/2  text-[4.5rem] px-[7rem] pt-[17rem] flex justify justify-center 
+          max-xl:text-[4rem] max-xl:px-[4.5rem] max-xl:pt-[25%] 
           max-lg:px-[3.5rem] max-lg:pt-[30%]
-          max-md:text-[3rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]
+          max-md:text-[3rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem] 
         "
       >
         <p>Make receipt splitting fun and efficient!</p>
@@ -31,10 +30,12 @@ export default function SingleImageDropzoneUsage() {
       {/* Right */}
       <div
         className="w-1/2 h-1/5 pt-[25rem] flex-col
-        flex justify justify-center
+        flex justify justify-center 
         max-xl:pt-[27rem]
-        max-lg:pr-[2rem]
+        max-lg:pr-[2rem] 
         max-md:pt-[5rem] max-md:w-[100%] max-md:ml-[1rem] max-md:pb-[7rem] max-md:max-h-min
+   
+
         "
       >
         <p className="flex justify-center text-[1.7rem] max-sm:text-[1.3rem]">
@@ -44,36 +45,23 @@ export default function SingleImageDropzoneUsage() {
             className="pl-2 mt-1 max-sm:mt-0 inline"
           />
         </p>
-
-        <div className="flex justify justify-center flex-col mt-4">
-          <SingleImageDropzone
-            width={400}
-            height={400}
-            value={file}
-            onChange={(file) => {
-              setFile(file);
-            }}
-          />
-          <button
-            onClick={async () => {
-              if (file) {
-                const res = await edgestore.publicFiles.upload({
-                  file,
-                  onProgressChange: (progress) => {
-                    // you can use this to show a progress bar
-                    console.log(progress);
-                  },
-                });
-                // you can run some server action or api here
-                // to add the necessary data to your database
-                console.log(res);
-              }
-            }}
-          >
-            Upload
-          </button>
-        </div>
+        <input
+          type="file"
+          id="chooseFile"
+          title="Choose a File"
+          className=" mx-[25%] my-2 py-4 pb-11 px-10 rounded-xl border-2
+              transition-all duration-500 bg-gradient-to-br to-[#afdbd74b] via-[#427d784d] from-[#afdbd749] bg-size-200 hover:bg-right-bottom
+            text-white text-xl
+            max-xl:mx-[20%]
+            max-lg:mx-[20%] 
+            max-md:mx-[10%] max-md:pb-4
+            "
+        ></input>
       </div>
     </div>
+  
   );
+  
 }
+
+
