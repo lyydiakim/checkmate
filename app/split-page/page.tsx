@@ -22,7 +22,6 @@
 "use client";
 import Image from "next/image";
 import receipt from "@/public/images/receiptex.jpeg";
-import { BsImage } from "react-icons/bs";
 import { FiArrowRightCircle } from "react-icons/Fi";
 import { PiUserCircleFill } from "react-icons/Pi";
 import Link from "next/link";
