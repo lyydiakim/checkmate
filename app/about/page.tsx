@@ -4,14 +4,28 @@ import OurService from "@/app/landing-page/OurService";
 export default function page() {
   return (
     <div>
-    <div className="flex h-screen flex-row text-black">
-      <p
-          className="text-center text-[1.4rem] py-[3rem] px-[22rem] 
-          max-xl:px-[17rem] 
-          max-lg:px-[7rem] max-lg:py-[2rem]
-          max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
-        > We are an awesome group of software engineers! We LOVE coding and splitting expenses. <br></br>
-        </p>
+
+<div
+      className="h-screen max-md:h-full flex flex-row  text-white max-md:flex-col">
+      {/* Left */}
+      <div
+        className="w-1/2  text-[3rem] px-[7rem] pt-[17rem] flex justify justify-center 
+          max-xl:text-[2.5rem] max-xl:px-[4.5rem] max-xl:pt-[25%] 
+          max-lg:px-[3.5rem] max-lg:pt-[30%]
+          max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
+        <p>We are an awesome group of software engineers! We LOVE coding and splitting expenses.</p>
+      </div>
+
+      {/* Right */}
+      <div
+        className="w-1/2 h-1/5 pt-[25rem] flex-col
+        flex justify justify-center 
+        max-xl:pt-[27rem]
+        max-lg:pr-[2rem] 
+        max-md:pt-[5rem] max-md:w-[100%] max-md:ml-[1rem] max-md:pb-[7rem] max-md:max-h-min
+        ">
+        <img className="flex self-center object-contain  w-5/6" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png" alt="Photograph of the entire CheckMates team."></img>
+      </div>
     </div>
     <OurService />
     </div>
