@@ -1,29 +1,8 @@
-// "use client";
-// import Link from "next/link";
-// export default function page() {
-//   return (
-//     <div className="flex h-screen flex-row text-white">
-//       <p
-//           className="text-center text-[1.4rem] py-[3rem] px-[22rem]
-//           max-xl:px-[17rem]
-//           max-lg:px-[7rem] max-lg:py-[2rem]
-//           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
-//         > Who are you splitting with? <br></br>
-//         Click
-//         <Link href="../share-page">
-//         <span className="text-orange"> next </span>
-//         </Link>
-//         to go to selecting page.
-//         </p>
-//     </div>
-//   );
-// }
-
 "use client";
 import Image from "next/image";
 import receipt from "@/public/images/receiptex.jpeg";
-// import { ChevronRightCircle } from "lucide-react";
-// import { UserCircle2 } from "lucide-react";
+import { ChevronRightCircle } from "lucide-react";
+import { UserCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export default function page() {
@@ -47,21 +26,20 @@ export default function page() {
         <div className="text-gray-200 text-3xl flex flex-col space-y-[2rem]">
           <div className=" pl-[5rem] ">
             <p className="mt-1">
-              {" "}
-              {/* <UserCircle2 size={45} className="inline text-blue-500 mr-4" /> */}
+              <UserCircle2 size={45} className="inline text-blue-500 mr-4" />
               Meesh Af
             </p>
           </div>
 
           <div className="pl-[5rem] ">
             <p className="mt-1">
-              {/* <UserCircle2 size={45} className="inline text-green-500 mr-4" /> */}
+              <UserCircle2 size={45} className="inline text-green-500 mr-4" />
               Ice Spice Af
             </p>
           </div>
           <div className="pl-[5rem]">
             <p className="mt-1">
-              {/* <UserCircle2 size={45} className="inline text-pink-500 mr-4" /> */}
+              <UserCircle2 size={45} className="inline text-pink-500 mr-4" />
               Princess Af
             </p>
           </div>
