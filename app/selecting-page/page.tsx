@@ -9,7 +9,11 @@ export default function page() {
           max-lg:px-[7rem] max-lg:py-[2rem]
           max-sm:px-[3rem] max-sm:text-[1.3rem] text-white"
         > Please assign splitters to items. <br></br>
-        <Link href="../share-page">Testing Link to Share Page</Link>
+        Click
+        <Link href="../share-page">
+        <span className="text-orange"> next </span>
+        </Link>
+        to go to share page.
         </p>
     </div>
   );
