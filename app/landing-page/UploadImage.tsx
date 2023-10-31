@@ -2,6 +2,7 @@
 import { AiFillCamera } from "react-icons/ai";
 import { BsArrowDownCircleFill } from "react-icons/bs";
 
+
 export default function UploadImage() {
   function uploadImage() {
     $("button").on("click", function () {
@@ -58,5 +59,9 @@ export default function UploadImage() {
         ></input>
       </div>
     </div>
+  
   );
+  
 }
+
+
