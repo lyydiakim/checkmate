@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link rel="stylesheet" href="ocr.css">
+    <script defer src='https://cdn.jsdelivr.net/npm/tesseract.js@2.1.4/dist/tesseract.min.js'></script>
+    <script defer src="ocr.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR with Tesseract.js</title>
+</head>
+
+<body>
+    <input type="file" id="upload" />
+    <button onclick="performOCR()">Extract Text</button>
+    <table id="result" cellspacing="0" cellpadding="0"></table>
+    <table id="extras" cellspacing="0" cellpadding="0"></table>
+</body>
+
+</html>
+
