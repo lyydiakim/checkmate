@@ -4,15 +4,23 @@ import { BsFillPersonFill } from "react-icons/bs"
 import OurService from "@/app/about/OurService";
 export default function page() {
   return (
-    <div>
-    <div
-      className="max-md:h-full flex flex-row  text-white max-md:flex-col">
-      <div className="w-1/2  text-[3rem] px-[7rem] pt-[15%] flex justify justify-center 
-          max-xl:text-[2.5rem] max-xl:px-[4.5rem] max-xl:pt-[20%] 
-          max-lg:px-[3.5rem] max-lg:pt-[20%]
-          max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[8rem]">
-        <p>We are an awesome group of software engineers! We LOVE coding and splitting expenses.</p>
-      </div>
+
+<div
+      className="h-screen max-md:h-full flex flex-row  text-white max-md:flex-col">
+      {/* Left */}
+      <div
+        className="w-1/2  text-[2rem] px-[7rem] pt-[17rem] flex justify justify-center 
+          max-xl:text-[2.5rem] max-xl:px-[4.5rem] max-xl:pt-[25%] 
+          max-lg:px-[3.5rem] max-lg:pt-[30%]
+          max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
+        <p>Hello from Santa Clara University! We are an awesome group of software engineers! We LOVE coding and splitting expenses. We hope you enjpy CheckMates!
+          <br></br>
+          Xoxo, 
+          <br></br>
+          Alex, Chloé, Lydia, Mark, Michelle, and Morgan 
+        </p>
+
+   
       <div className="w-1/2 h-1/5 pt-[13%] flex-col
         flex justify justify-center 
         max-xl:pt-[20%]
@@ -40,7 +48,7 @@ export default function page() {
         AI-powered solution to this common problem. 
         </p>
       </div>
-    </div>
+  </div>
 
     <OurService />
     
