@@ -14,8 +14,6 @@ export default function page() {
           max-lg:px-[3.5rem] max-lg:pt-[30%]
           max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
         <p>Hello from Santa Clara University! We are an awesome group of software engineers! We LOVE coding and splitting expenses. We hope you enjpy CheckMates!</p>
-        <br>With Love,</br>
-        <br>Alex, Chloé, Mark, Lydia, Michelle, and Morgan</br>
       </div>
 
       {/* Right */}
