@@ -4,7 +4,6 @@ import { BsFillPersonFill } from "react-icons/bs"
 import OurService from "@/app/about/OurService";
 export default function page() {
   return (
-    <div>
 
 <div
       className="h-screen max-md:h-full flex flex-row  text-white max-md:flex-col">
@@ -49,7 +48,7 @@ export default function page() {
         AI-powered solution to this common problem. 
         </p>
       </div>
-    </div>
+  </div>
 
     <OurService />
     
