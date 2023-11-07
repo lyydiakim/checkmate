@@ -1,4 +1,6 @@
 "use client";
+import React from "react";
+
 import Link from "next/link";
 import { BsFillPersonFill } from "react-icons/bs"
 import OurService from "@/app/about/OurService";
@@ -13,12 +15,17 @@ export default function page() {
           max-xl:text-[2.5rem] max-xl:px-[4.5rem] max-xl:pt-[25%] 
           max-lg:px-[3.5rem] max-lg:pt-[30%]
           max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
+<<<<<<< HEAD
         <p>Hello from Santa Clara University! We are an awesome group of software engineers! We LOVE coding and splitting expenses. We hope you enjpy CheckMates!
           <br></br>
           Xoxo, 
           <br></br>
           Alex, Chloé, Lydia, Mark, Michelle, and Morgan 
         </p>
+=======
+        <p>We are an awesome group of software engineers! We LOVE coding and splitting expenses.</p>
+      </div>
+>>>>>>> parent of 75fe315 (New text in our service and about us page)
 
    
       <div className="w-1/2 h-1/5 pt-[13%] flex-col

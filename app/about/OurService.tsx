@@ -22,12 +22,15 @@ export default function OurService() {
           frequently struggle to divide expenses without error. CheckMate is a
           web app that scans your receipt and does all the math for you. Our
           product makes splitting receipts efficient, accurate, and fun!
+<<<<<<< HEAD
           <br></br>
           How to use:
           <br></br>
           Uplaod a photo of your receipt and let us know who you're splitting with. 
           You'll be able to assign each splitter to their items, unless you want to split your bill evenly. 
           You'll get itemized lists of everyone's personal expenses and share the however you like!
+=======
+>>>>>>> parent of 75fe315 (New text in our service and about us page)
         </p>
       </div>
     </div>
