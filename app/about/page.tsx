@@ -15,7 +15,8 @@ export default function page() {
           max-md:text-[2rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
         <p>Hello from Santa Clara University! We are an awesome group of software engineers! We LOVE coding and splitting expenses. We hope you enjpy CheckMates!
           <br></br>
-          With Love, <br></br>
+          Xoxo, 
+          <br></br>
           Alex, Chloé, Lydia, Mark, Michelle, and Morgan 
         </p>
       </div>
