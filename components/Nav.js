@@ -39,7 +39,7 @@ export default function Nav() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [scrollY]);
 
   const variants = {
     visible: { opacity: 1, y: 0 },
