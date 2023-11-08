@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { BsFillPersonFill } from "react-icons/bs";
 
-import { LiaReceiptSolid } from "react-icons/Lia";
+import { LiaReceiptSolid } from "react-icons/lia";
 
 export default function page() {
   return (
