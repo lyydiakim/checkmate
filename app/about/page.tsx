@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import groupPhoto from "@/public/images/groupphotos.png";
+// import groupPhoto from "@/public/images/groupphotos.png";
 import { BsFillPersonFill } from "react-icons/bs";
 
 import { LiaReceiptSolid } from "react-icons/lia";
