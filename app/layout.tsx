@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav.js";
 import "../styles/globals.css";

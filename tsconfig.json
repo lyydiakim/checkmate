@@ -20,9 +20,18 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@//*": ["../*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/types/**/*.tsx",
+    "app/split-page/result.tsx", // "pages/api/upload.ts"
+    "app/split-page/page.tsx"
+  ],
   "exclude": ["node_modules"]
 }
