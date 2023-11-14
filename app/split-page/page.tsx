@@ -74,7 +74,7 @@ export default function page() {
           </div>
         </div>
 
-        <div className="pl-[5rem] mt-[4rem]">
+        <div className="flex justify-center mt-[4rem]">
           <Link
             className="bg-[#289ba158] border-2 border-[#9acbce]  border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md "
             href="../share-page"
