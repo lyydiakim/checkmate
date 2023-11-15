@@ -10,9 +10,9 @@ export default function HowTo() {
           max-lg:px-[7rem] max-lg:py-[2rem]
           max-sm:px-[3rem] max-sm:text-[1.3rem]"
         >
-          Please upload a photo of your receipt and click{" "}  
-          <Link href="../split-page" passHref> 
-          <span className="text-orange">next</span>
+          Please upload a photo of your receipt and click{" "}
+          <Link href="../split-page" passHref>
+            <span className="text-orange">next</span>
           </Link>
           .
         </p>
