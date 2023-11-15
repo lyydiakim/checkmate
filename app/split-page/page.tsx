@@ -274,6 +274,7 @@ export default function SplitPage() {
             value={names[index]}
             onChange={(e) => handleNameChange(index, e)}
           />
+
         </div>
       ))}
 
