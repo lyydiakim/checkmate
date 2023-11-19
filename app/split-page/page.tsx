@@ -46,7 +46,7 @@ const SplitPage: React.FC = () => {
   const [optionClicked, setOptionClicked] = useState(false);
 
   // Event handler for radio button change
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
     setOptionClicked(true);
   };
