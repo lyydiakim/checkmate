@@ -323,7 +323,6 @@
 
 //----------------------------------------------------------------
 
-import { AiFillCamera } from "react-icons/ai";
 import { BsArrowDownCircleFill } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
@@ -332,14 +331,17 @@ import Tesseract from "tesseract.js";
 
 export default function UploadImage() {
   const [ocrResult, setOcrResult] = useState<string | null>(null);
-  const router = useRouter(); // Initialize the router
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    // Redirect to a new page when ocrResult changes
     if (ocrResult) {
-      setTimeout(() => {
-        router.push("/split-page"); // Replace with your desired route
-      }, 1500); // 5000 milliseconds (5 seconds) delay
+      // Redirect to a new page when ocrResult changes
+      sessionStorage.setItem("textKey", "textValue");
+      const parsedRecieptText = sessionStorage.getItem("textKey");
+      console.log("Stored Value:", parsedRecieptText);
+
+      router.push("/split-page");
     }
   }, [ocrResult, router]);
 
@@ -351,13 +353,17 @@ export default function UploadImage() {
     } catch (error) {
       console.error("Error performing OCR:", error);
     }
-    await new Promise((resolve) => setTimeout(resolve, 1500)); //i just put this here so u could see that its kind of working...
   }
 
   function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      performOCR(file);
+      // performOCR(file); // add later testing image functionality rn
+      const fileUrl = URL.createObjectURL(file);
+      setFileUrl(fileUrl);
+
+      sessionStorage.setItem("fileUrl", fileUrl);
+      router.push("/split-page");
     }
   }
 
@@ -366,7 +372,6 @@ export default function UploadImage() {
       <div>
         {ocrResult && (
           <div>
-            <strong>Me when this literally doesnt work 😍.... </strong>
             <p>Parsed Receipt</p>
             <br />
             <ul>
@@ -414,11 +419,11 @@ export default function UploadImage() {
     "
           onChange={handleFileUpload}
         />
-
+        {/* 
         <table id="result" cellSpacing="0" cellPadding="0"></table>
-        <table id="extras" cellSpacing="0" cellPadding="0"></table>
+        <table id="extras" cellSpacing="0" cellPadding="0"></table> */}
 
-        {formatOcrResult(ocrResult)}
+        {/* {formatOcrResult(ocrResult)} */}
       </div>
     </div>
   );
