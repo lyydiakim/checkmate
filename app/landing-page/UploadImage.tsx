@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { BsArrowDownCircleFill } from "react-icons/bs";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 
 export default function UploadImage() {
@@ -11,13 +11,15 @@ export default function UploadImage() {
 
   function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+
     if (file) {
-      // performOCR(file); // add later testing image functionality rn
-      const fileUrl = URL.createObjectURL(file);
+      //if file uploaded is valid
+      const fileUrl = URL.createObjectURL(file); //create url to address the image
       setFileUrl(fileUrl);
 
-      sessionStorage.setItem("fileUrl", fileUrl);
-      router.push("/split-page");
+      sessionStorage.setItem("fileUrl", fileUrl); //save img to session storage to use on next pages
+
+      router.push("/split-page"); //redirect to split page once image is uploaded & image url created
     }
   }
 
@@ -53,7 +55,7 @@ export default function UploadImage() {
           max-lg:mx-[20%]
           max-md:mx-[10%] max-md:pb-4
           "
-          onChange={handleFileUpload}
+          onChange={handleFileUpload} //if some file is uploaded by user, then call handleFileUpload function
         />
       </div>
     </div>
