@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { ChevronRightCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 // Your Next.js page component
 const NextPage: React.FC = () => {
@@ -11,6 +13,9 @@ const NextPage: React.FC = () => {
   const [selectedLines, setSelectedLines] = useState<string[]>([]);
   // State to store the currently selected name
   const [selectedName, setSelectedName] = useState<string | null>(null);
+  // State to store the selected lines
+  const router = useRouter();
+
 
   useEffect(() => {
     // Retrieve names array
@@ -49,6 +54,14 @@ const NextPage: React.FC = () => {
   const handleNameClick = (name: string) => {
     // Set the selected name
     setSelectedName(name);
+  };
+
+  const handleContinue = () => {
+    // Save selectedLines to sessionStorage
+    sessionStorage.setItem('selectedLines', JSON.stringify(selectedLines));
+
+    // Navigate to the SharePage
+    router.push('/share-page', { selectedLines: JSON.stringify(selectedLines) });
   };
 
   return (
@@ -119,6 +132,16 @@ const NextPage: React.FC = () => {
             ))}
           </div>
         )}
+        {/* Continue button */}
+      <div className="pl-[5rem] mt-[4rem]">
+        <button
+          onClick={handleContinue}
+          className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+        >
+          Continue
+          <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
+        </button>
+      </div>
       </div>
     </div>
   );
