@@ -1,31 +1,31 @@
 "use client";
 import { useEffect, useState } from "react";
 
-// Your Next.js page component
 const NextPage: React.FC = () => {
-  // State to store the retrieved names
+  // store the retrieved names
   const [retrievedNames, setRetrievedNames] = useState<string[]>([]);
-  // State for storing OCR result
+
+  // store OCR result
   const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
-  // State to store the selected lines
+
+  // store the selected reciept items
   const [selectedLines, setSelectedLines] = useState<string[]>([]);
-  // State to store the currently selected name
+
+  // store the currently selected name
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
   useEffect(() => {
-    // Retrieve names array
+    // retrieve names array
     const storedNames = sessionStorage.getItem("names");
 
     if (storedNames) {
-      // Parse the JSON string back to an array
       const parsedNames = JSON.parse(storedNames);
       setRetrievedNames(parsedNames);
     }
 
-    // Retrieve tesseract results
+    // retrieve tesseract results
     const storedOCR = sessionStorage.getItem("ocrResult");
     if (storedOCR) {
-      // Parse the JSON string back to a string
       const ocrOutput = JSON.parse(storedOCR);
       setRetrievedOCR(ocrOutput);
     }
@@ -34,20 +34,19 @@ const NextPage: React.FC = () => {
   // Function to handle line selection
   const handleLineClick = (line: string) => {
     if (selectedName) {
-      // If a name is selected, add the line under that name
+      // once name is clicked, add the reciept item under that name
       setSelectedLines((prevSelectedLines) => [
         ...prevSelectedLines,
         `${selectedName}: ${line}`,
       ]);
     } else {
-      // If no name is selected, just add the line to the list
+      // if no name is clicked
       setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
     }
   };
 
-  // Function to handle name selection
+  //  handle name selection
   const handleNameClick = (name: string) => {
-    // Set the selected name
     setSelectedName(name);
   };
 
@@ -103,6 +102,7 @@ const NextPage: React.FC = () => {
           ))}
         </ul>
 
+        {/* Display OCR from split page */}
         {retrievedOCR && (
           <div className=" ml-[4rem]">
             <p className="text-[1.5rem] mb-[1.5rem] font-bold">

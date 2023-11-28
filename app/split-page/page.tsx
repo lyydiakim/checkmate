@@ -9,6 +9,7 @@ import Link from "next/link";
 import { ChevronRightCircle } from "lucide-react";
 
 const distinctColors = [
+  // these colors are used to distinguish between users
   "#FF5733",
   "#33FF57",
   "#5733FF",
@@ -32,20 +33,20 @@ const distinctColors = [
 ];
 
 const SplitPage: React.FC = () => {
-  const router = useRouter();
-  const [numPeople, setNumPeople] = useState<number>(2);
+  //  const router = useRouter();
+  const [numPeople, setNumPeople] = useState<number>(2); //set default number of people splitting to 2
   const [names, setNames] = useState<string[]>([]);
   const [randomColors, setRandomColors] = useState<string[]>([]);
-  const [imageURL, setImageURL] = useState<string | null>(null); // State for storing the image URL
-  const [ocrResult, setOcrResult] = useState<string | null>(null); // State for storing OCR result
+  const [imageURL, setImageURL] = useState<string | null>(null); // storing the image URL
+  const [ocrResult, setOcrResult] = useState<string | null>(null); // storing OCR result
 
-  // Event handler for radio button change
+  // event handler for radio button (split evenly / unevenly)
   const [selectedOption, setSelectedOption] = useState("");
 
-  // State to track whether an option has been clicked
+  // State to track whether evenly / unevenly has been clicked
   const [optionClicked, setOptionClicked] = useState(false);
 
-  // Event handler for radio button change
+  // event handler for radio button change
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
     setOptionClicked(true);
@@ -56,7 +57,7 @@ const SplitPage: React.FC = () => {
     const storedImageURL = sessionStorage.getItem("fileUrl");
     setImageURL(storedImageURL);
 
-    // Perform OCR on the image
+    // perform OCR on the image
     if (storedImageURL) {
       Tesseract.recognize(
         storedImageURL,
@@ -64,29 +65,29 @@ const SplitPage: React.FC = () => {
         { logger: (info) => console.log(info) } // can see the progress in the console
       ).then(({ data }) => {
         setOcrResult(data.text); //setting ocrResult here!!
-        sessionStorage.setItem("ocrResult", data.text);
+        sessionStorage.setItem("ocrResult", data.text); //store the ocrResult to use on selecting-page
       });
     }
   }, []);
 
   useEffect(() => {
-    // Save names array and OCR result in sessionStorage
+    // Save names array + OCR in sessionStorage so that you can use the names on the next page
     sessionStorage.setItem("names", JSON.stringify(names));
     sessionStorage.setItem("ocrResult", JSON.stringify(ocrResult));
   }, [names, ocrResult]);
 
   useEffect(() => {
-    // Ensure numPeople is non-negative
+    // make sure numPeople is non-negative
     const validNumPeople = Math.max(0, numPeople);
 
-    // Generate distinct colors when the number of people changes
+    // generate distinct colors for each user added
     const colors = Array(validNumPeople)
       .fill("")
       .map((_, index) => distinctColors[index % distinctColors.length]);
     setRandomColors(colors);
   }, [numPeople]);
 
-  // Event handler for changing a person's name
+  // event handler to update the user's inputted names
   const handleNameChange = (index: number, newName: string) => {
     const updatedNames = [...names];
     updatedNames[index] = newName;
@@ -94,7 +95,7 @@ const SplitPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // Update names array when numPeople changes
+    // update names array when numPeople changes
     setNames((prevNames) => prevNames.slice(0, numPeople));
   }, [numPeople]);
 
@@ -121,11 +122,16 @@ const SplitPage: React.FC = () => {
       {ocrResult && (
         <div className="w-[25%] mx-4">
           <p className="text-[2rem] mb-[1.5rem] font-bold">OCR Result:</p>
-          {ocrResult.split("\n").map((line, index) => (
-            <p key={index} className="text-[1rem]">
-              {line}
-            </p>
-          ))}
+          {ocrResult.split("\n").map(
+            (
+              line,
+              index //display each receipt item on new line
+            ) => (
+              <p key={index} className="text-[1rem]">
+                {line}
+              </p>
+            )
+          )}
         </div>
       )}
 
