@@ -1,89 +1,226 @@
+// havent changed the tesseract stuff ~ just displaying the parsed text atm
+// add functionality to change the tesseract text
+// uploaded image is saved in session storage under fileURL and tesseract stuff saved under ocrResult
 "use client";
-import Image from "next/image";
-import receipt from "@/public/images/receiptex.jpeg";
-import { ChevronRightCircle } from "lucide-react";
-import { UserCircle2 } from "lucide-react";
+import Tesseract from "tesseract.js";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ChevronRightCircle } from "lucide-react";
 
-export default function page() {
+const distinctColors = [
+  "#FF5733",
+  "#33FF57",
+  "#5733FF",
+  "#FFFF33",
+  "#33FFFF",
+  "#FF33FF",
+  "#FF6633",
+  "#33FFCC",
+  "#9966FF",
+  "#FFCC33",
+  "#33FF99",
+  "#FF3366",
+  "#3399FF",
+  "#FF9933",
+  "#33FF66",
+  "#6633FF",
+  "#FFCC66",
+  "#66FF33",
+  "#CC33FF",
+  "#FF6666",
+];
+
+const SplitPage: React.FC = () => {
+  const router = useRouter();
+  const [numPeople, setNumPeople] = useState<number>(2);
+  const [names, setNames] = useState<string[]>([]);
+  const [randomColors, setRandomColors] = useState<string[]>([]);
+  const [imageURL, setImageURL] = useState<string | null>(null); // State for storing the image URL
+  const [ocrResult, setOcrResult] = useState<string | null>(null); // State for storing OCR result
+
+  // Event handler for radio button change
+  const [selectedOption, setSelectedOption] = useState("");
+
+  // State to track whether an option has been clicked
+  const [optionClicked, setOptionClicked] = useState(false);
+
+  // Event handler for radio button change
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.target.value);
+    setOptionClicked(true);
+  };
+
+  useEffect(() => {
+    // retrieve the image URL from session storage
+    const storedImageURL = sessionStorage.getItem("fileUrl");
+    setImageURL(storedImageURL);
+
+    // Perform OCR on the image
+    if (storedImageURL) {
+      Tesseract.recognize(
+        storedImageURL,
+        "eng",
+        { logger: (info) => console.log(info) } // can see the progress in the console
+      ).then(({ data }) => {
+        setOcrResult(data.text); //setting ocrResult here!!
+        sessionStorage.setItem("ocrResult", data.text);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save names array and OCR result in sessionStorage
+    sessionStorage.setItem("names", JSON.stringify(names));
+    sessionStorage.setItem("ocrResult", JSON.stringify(ocrResult));
+  }, [names, ocrResult]);
+
+  useEffect(() => {
+    // Ensure numPeople is non-negative
+    const validNumPeople = Math.max(0, numPeople);
+
+    // Generate distinct colors when the number of people changes
+    const colors = Array(validNumPeople)
+      .fill("")
+      .map((_, index) => distinctColors[index % distinctColors.length]);
+    setRandomColors(colors);
+  }, [numPeople]);
+
+  // Event handler for changing a person's name
+  const handleNameChange = (index: number, newName: string) => {
+    const updatedNames = [...names];
+    updatedNames[index] = newName;
+    setNames(updatedNames);
+  };
+
+  useEffect(() => {
+    // Update names array when numPeople changes
+    setNames((prevNames) => prevNames.slice(0, numPeople));
+  }, [numPeople]);
+
   return (
-    <div
-      className="flex  flex-row justify justify-center h-screen  mt-[10rem] text-white
-      max-md:flex-col
-    "
-    >
-      <div className="text-2xl mr-[5rem]">
-        {/* <p className="mb-4">
-          Your Uploaded Image <BsImage className="inline" />
-        </p> */}
-        <Image className="w-auto h-[70%]" src={receipt} alt="receipt" />
+    <div className="text-white pt-[6rem] m-10 flex flex-row">
+      <div className="mx-4">
+        <p className="text-[2rem] mb-[1.5rem] font-bold">Uploaded Image:</p>
+
+        {imageURL && (
+          <img
+            src={imageURL}
+            alt="Uploaded File From User"
+            style={{
+              width: "300px",
+              height: "auto",
+              border: "2px solid #333",
+              display: "flex",
+            }}
+          />
+        )}
       </div>
 
-      <div className="bg-gray-300 bg-opacity-20 rounded-lg  h-[70%] w-[50%]">
-        <p className="text-[#ffffff] text-[2.5rem]  text-bold p-10 ">
-          How many people are splitting this receipt?
+      {/* display OCR result */}
+      {ocrResult && (
+        <div className="w-[25%] mx-4">
+          <p className="text-[2rem] mb-[1.5rem] font-bold">OCR Result:</p>
+          {ocrResult.split("\n").map((line, index) => (
+            <p key={index} className="text-[1rem]">
+              {line}
+            </p>
+          ))}
+        </div>
+      )}
+
+      <div className="">
+        <p className="inline-flex  text-[2rem] font-bold ">
+          How many people are splitting this receipt?{" "}
         </p>
-        <hr />
-        {/* Name Examples */}
-        <div className="flex flex-row">
-          <div className="text-gray-200 text-[1.5rem] pt-[3rem] space-y-[3rem]">
-            <div className=" pl-[5rem] ">
-              <p className="mt-1">
-                <UserCircle2 size={45} className="inline text-blue-500 mr-4" />
-                Meesh Af
-              </p>
-            </div>
+        <input
+          className=" ml-[2rem] inline-flex text-black w-[10%] border-blue-500 border-2 text-[1.5rem] rounded-xl font-bold p-2"
+          type="number"
+          placeholder="Default is 2"
+          value={numPeople}
+          onChange={(e) => {
+            const inputValue = e.target.value;
+            const parsedValue = parseInt(inputValue, 10);
 
-            <div className="pl-[5rem] ">
-              <p className="mt-1">
-                <UserCircle2 size={45} className="inline text-green-500 mr-4" />
-                Ice Spice Af
-              </p>
-            </div>
-            <div className="pl-[5rem]">
-              <p className="mt-1">
-                <UserCircle2 size={45} className="inline text-pink-500 mr-4" />
-                Princess Af
-              </p>
-            </div>
-          </div>
+            // check if the parsed value is valid number
+            if (!isNaN(parsedValue)) {
+              setNumPeople(Math.max(0, parsedValue));
+            } else {
+              //  default value of 2
+              setNumPeople(2);
+            }
+          }}
+        />
+        <p className="text-[1rem] text-gray-400">
+          Use the arrows to adjust the number of people.
+        </p>
+        <div className="pt-[3rem]">
+          <p className=" text-[1.3rem]">
+            Are you splitting the receipt evenly or unevenly?
+          </p>
+          <label className="mr-4">
+            <input
+              className="mr-2"
+              type="radio"
+              value="evenly"
+              name="options"
+              checked={selectedOption === "option1"}
+              onChange={handleRadioChange}
+            />
+            Evenly
+          </label>
 
-          <div className="text-gray-200 text-[1.5rem] pt-[3rem]  space-y-[3rem]">
-            <div className=" pl-[5rem] ">
-              <p className="mt-1">
-                <UserCircle2 size={45} className="inline text-red-500 mr-4" />
-                Meesh Af
-              </p>
-            </div>
+          <label>
+            <input
+              className="bg-black mr-2"
+              type="radio"
+              value="unevenly"
+              name="options"
+              checked={selectedOption === "option2"}
+              onChange={handleRadioChange}
+            />
+            Unevenly
+          </label>
+        </div>
 
-            <div className="pl-[5rem] ">
-              <p className="mt-1">
-                <UserCircle2
-                  size={45}
-                  className="inline text-indigo-500 mr-4"
+        {optionClicked && (
+          <div className="mt-[3rem]">
+            <p className="text-[1.3rem] mb-[3rem]">
+              Let's split this receipt {selectedOption}!
+              <br />
+              Type in the names/initials of the people you are splitting this
+              reciept with.
+            </p>
+            {/* Display input fields for each person */}
+            {Array.from({ length: numPeople }).map((_, index) => (
+              <div key={index} className="ml-[3rem] mb-[3rem]">
+                <div
+                  className="inline-block mr-[1.5rem] w-6 h-6 rounded-full ml-2"
+                  style={{ backgroundColor: randomColors[index] }}
                 />
-                Ice Spice Af
-              </p>
-            </div>
-            <div className="pl-[5rem]">
-              <p className="mt-1">
-                <UserCircle2 size={45} className="inline text-sky-500 mr-4" />
-                Princess Af
-              </p>
+                <input
+                  className="text-black p-2 rounded-xl h-[2.5rem]"
+                  type="text"
+                  placeholder={`Person ${index + 1}'s name`}
+                  value={names[index] || ""}
+                  onChange={(e) => handleNameChange(index, e.target.value)}
+                />
+              </div>
+            ))}
+            <div className="ml-[3.5rem] mt-4">
+              <Link
+                className="bg-[#289ba114] border-2 border-[#9acbce8b] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+                href="../selecting-page"
+              >
+                Next
+                <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
+              </Link>
             </div>
           </div>
-        </div>
-
-        <div className="pl-[5rem] mt-[4rem]">
-          <Link
-            className="bg-[#289ba158] border-2 border-[#9acbce]  border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md "
-            href="../share-page"
-          >
-            Continue
-            <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
-          </Link>
-        </div>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default SplitPage;
