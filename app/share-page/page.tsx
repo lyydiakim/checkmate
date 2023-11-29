@@ -134,8 +134,8 @@ const SharePage: React.FC = () => {
       {/* Lines by names content */}
       {Object.keys(linesByNames).map((name, index) => (
         <div key={index} className="text-gray-200 mt-4 flex flex-col items-center">
-          <div className="text-left w-full max-w-md text-center">
-            <h2 className="text-teal font-bold" style={{ whiteSpace: 'pre-wrap' }}>{name}'s Items: </h2>
+          <div className="text-teal text-left w-full max-w-md text-center">
+            <h2 className="text-gray-200 font-bold" style={{ whiteSpace: 'pre-wrap' }}>{name}'s Items: </h2>
             <ul>
               {linesByNames[name].map((line, lineIndex) => (
                 <li key={lineIndex}>{line}</li>
