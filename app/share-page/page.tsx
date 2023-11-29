@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import 'global';
 let html2pdfModule: Promise<{ default: any }> | undefined;
+import { CopyToClipboard } from 'react-copy-to-clipboard'; // Import the CopyToClipboard component
 
 if (typeof window !== 'undefined') {
   // Dynamically import html2pdf.js only on the client side
@@ -13,6 +14,7 @@ if (typeof window !== 'undefined') {
 const SharePage: React.FC = () => {
   const [parsedReceipt, setParsedReceipt] = useState<string[]>([]);
   const [linesByNames, setLinesByNames] = useState<{ [key: string]: string[] }>({});
+  const [copied, setCopied] = useState(false); // State to track whether text is copied
 
   useEffect(() => {
     // Retrieve parsed receipt from sessionStorage
@@ -86,45 +88,92 @@ const SharePage: React.FC = () => {
     }
   };
 
+  // Function to handle copying lists
+  const handleCopyLists = () => {
+  // Create an array to store the lines with names
+  const linesWithNames = [];
+
+  // Add the parsed receipt lines
+  linesWithNames.push(...parsedReceipt);
+
+  // Add lines by names with their corresponding names and a blank line between each set
+  Object.keys(linesByNames).forEach((name, index, array) => {
+    const nameHeader = `${name}'s Items:`;
+    linesWithNames.push(nameHeader, ...linesByNames[name]);
+
+    // Add a blank line unless it's the last set of lines
+    if (index < array.length - 1) {
+      linesWithNames.push('');
+    }
+  });
+
+  // Concatenate the lines into a single string
+  const listsText = linesWithNames.join('\n');
+
+  // Use the clipboard API to copy the text
+  navigator.clipboard.writeText(listsText)
+    .then(() => setCopied(true))
+    .catch((error) => console.error('Copy failed:', error));
+  };
+
   return (
     <div className="text-white m-10 mt-[6rem]">
-      <h1 className="text-[2.5rem] flex justify-center">
-        Splitters & Items
+      <h1 className="text-[1.5rem] flex justify-center">
+        Here's your receipt information based on your selection.
       </h1>
 
       {/* Parsed receipt content */}
-      <div id="parsedReceipt" className="text-gray-200 mt-4">
+      <div id="parsedReceipt" className="text-gray-200 mt-4 flex justify-center">
         {parsedReceipt.map((line, index) => (
           <p key={index} className="text-[1rem] mb-[1rem]">
             {line}
           </p>
         ))}
       </div>
-
+      
       {/* Lines by names content */}
       {Object.keys(linesByNames).map((name, index) => (
-        <div key={index} className="text-gray-200 mt-4">
-          <h2>{name}'s Items:</h2>
-          <ul>
-            {linesByNames[name].map((line, lineIndex) => (
-              <li key={lineIndex}>{line}</li>
-            ))}
-          </ul>
+        <div key={index} className="text-gray-200 mt-4 flex flex-col items-center">
+          <div className="text-teal text-left w-full max-w-md text-center">
+            <h2 className="text-gray-200 font-bold" style={{ whiteSpace: 'pre-wrap' }}>{name}'s Items: </h2>
+            <ul>
+              {linesByNames[name].map((line, lineIndex) => (
+                <li key={lineIndex}>{line}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       ))}
 
-      {/* Export button */}
-      <div className="mt-4">
+      <br></br>
+      <div className="text-[1rem] flex justify-center">
+        <p>How would you like share this with your checkmates?</p>
+      </div>
+      
+      
+      {/* Buttons container */}
+      <div className="mt-4 flex justify-center space-x-4">
+        {/* Export as PDF button */}
         <button
           onClick={handleExportPDF}
           className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
         >
           Export as PDF
         </button>
+
+      {/* Copy Lists button */}
+      <CopyToClipboard text={parsedReceipt.concat(Object.values(linesByNames).flat()).join('\n')}>
+        <button
+          onClick={handleCopyLists}
+          className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#d04d0a] hover:animate-pulse text-2xl p-2 rounded-md"
+        >
+          Copy Lists
+        </button>
+        </CopyToClipboard>
+          {copied && <p className="text-green-500">Lists copied to clipboard!</p>}
       </div>
-      <div className="text-[2rem] flex justify-center">
-        <p>Would you like to save this as a PDF to send to your Checkmates?</p>
-      </div>
+
+      
     </div>
   );
 }
