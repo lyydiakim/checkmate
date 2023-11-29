@@ -1,5 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ChevronRightCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const NextPage: React.FC = () => {
   // store the retrieved names
@@ -7,12 +9,13 @@ const NextPage: React.FC = () => {
 
   // store OCR result
   const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
-
-  // store the selected reciept items
-  const [selectedLines, setSelectedLines] = useState<string[]>([]);
-
-  // store the currently selected name
+ 
+  // State to store the lines associated with each name
+  const [linesByNames, setLinesByNames] = useState<{ [key: string]: string[] }>({});
+  
+  // State to store the currently selected name
   const [selectedName, setSelectedName] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // retrieve names array
@@ -34,20 +37,25 @@ const NextPage: React.FC = () => {
   // Function to handle line selection
   const handleLineClick = (line: string) => {
     if (selectedName) {
-      // once name is clicked, add the reciept item under that name
-      setSelectedLines((prevSelectedLines) => [
-        ...prevSelectedLines,
-        `${selectedName}: ${line}`,
-      ]);
-    } else {
-      // if no name is clicked
-      setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
+      // If a name is selected, add the line under that name
+      setLinesByNames((prevLinesByNames) => ({
+        ...prevLinesByNames,
+        [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
+      }));
     }
   };
 
   //  handle name selection
   const handleNameClick = (name: string) => {
     setSelectedName(name);
+  };
+
+  const handleContinue = () => {
+    // Save linesByNames to sessionStorage
+    sessionStorage.setItem('linesByNames', JSON.stringify(linesByNames));
+
+    // Navigate to the SharePage
+    router.push('/share-page');
   };
 
   return (
@@ -62,7 +70,6 @@ const NextPage: React.FC = () => {
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
         <ul className="flex flex-wrap h-[20%]">
-          {/*height may be wrong*/}
           {retrievedNames.map((name, index) => (
             <li
               className={`pb-[3rem] pr-[2rem] mb-[1rem] ${
@@ -79,25 +86,11 @@ const NextPage: React.FC = () => {
                 Assign {name}'s Items
               </p>
               {/* Display the selected lines under the corresponding heading */}
-              {selectedLines
-                .filter((selectedLine) => selectedLine.startsWith(`${name}:`))
-                .map((selectedLine, i) => (
-                  <p key={i} className="text-[1rem] mb-[1rem]">
-                    <button
-                      className="mr-2 text-red-500"
-                      onClick={() =>
-                        setSelectedLines((prevSelectedLines) =>
-                          prevSelectedLines.filter(
-                            (line) => line !== selectedLine
-                          )
-                        )
-                      }
-                    >
-                      x
-                    </button>
-                    {selectedLine.replace(`${name}: `, "")}
-                  </p>
-                ))}
+              {linesByNames[name]?.map((selectedLine, i) => (
+                <p key={i} className="text-[1rem] mb-[1rem]">
+                  {selectedLine}
+                </p>
+              ))}
             </li>
           ))}
         </ul>
@@ -119,6 +112,17 @@ const NextPage: React.FC = () => {
             ))}
           </div>
         )}
+        
+        {/* Continue button */}
+        <div className="pl-[5rem] mt-[4rem]">
+          <button
+            onClick={handleContinue}
+            className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+          >
+            Continue
+            <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -11,12 +11,17 @@
   "dependencies": {
     "@types/tesseract.js": "^2.0.0",
     "@videsk/tailwind-random-color": "^0.2.0-beta",
+    "encoding": "^0.1.13",
     "framer-motion": "^10.16.4",
+    "global": "^4.4.0",
+    "html2pdf.js": "^0.10.1",
     "lucide-react": "^0.292.0",
     "next": "^13.5.6",
+    "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
+    "sharp": "^0.33.0",
     "tesseract.js": "^5.0.3"
   },
   "devDependencies": {
@@ -30,6 +35,5 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
-
   }
 }
