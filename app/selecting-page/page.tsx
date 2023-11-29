@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronRightCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -9,13 +9,11 @@ const NextPage: React.FC = () => {
   const [retrievedNames, setRetrievedNames] = useState<string[]>([]);
   // State for storing OCR result
   const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
-  // State to store the selected lines
-  const [selectedLines, setSelectedLines] = useState<string[]>([]);
+  // State to store the lines associated with each name
+  const [linesByNames, setLinesByNames] = useState<{ [key: string]: string[] }>({});
   // State to store the currently selected name
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  // State to store the selected lines
   const router = useRouter();
-
 
   useEffect(() => {
     // Retrieve names array
@@ -40,13 +38,10 @@ const NextPage: React.FC = () => {
   const handleLineClick = (line: string) => {
     if (selectedName) {
       // If a name is selected, add the line under that name
-      setSelectedLines((prevSelectedLines) => [
-        ...prevSelectedLines,
-        `${selectedName}: ${line}`,
-      ]);
-    } else {
-      // If no name is selected, just add the line to the list
-      setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
+      setLinesByNames((prevLinesByNames) => ({
+        ...prevLinesByNames,
+        [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
+      }));
     }
   };
 
@@ -57,11 +52,11 @@ const NextPage: React.FC = () => {
   };
 
   const handleContinue = () => {
-    // Save selectedLines to sessionStorage
-    sessionStorage.setItem('selectedLines', JSON.stringify(selectedLines));
+    // Save linesByNames to sessionStorage
+    sessionStorage.setItem('linesByNames', JSON.stringify(linesByNames));
 
     // Navigate to the SharePage
-    router.push('/share-page', { selectedLines: JSON.stringify(selectedLines) });
+    router.push('/share-page');
   };
 
   return (
@@ -76,7 +71,6 @@ const NextPage: React.FC = () => {
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
         <ul className="flex flex-wrap h-[20%]">
-          {/*height may be wrong*/}
           {retrievedNames.map((name, index) => (
             <li
               className={`pb-[3rem] pr-[2rem] mb-[1rem] ${
@@ -93,25 +87,11 @@ const NextPage: React.FC = () => {
                 Assign {name}'s Items
               </p>
               {/* Display the selected lines under the corresponding heading */}
-              {selectedLines
-                .filter((selectedLine) => selectedLine.startsWith(`${name}:`))
-                .map((selectedLine, i) => (
-                  <p key={i} className="text-[1rem] mb-[1rem]">
-                    <button
-                      className="mr-2 text-red-500"
-                      onClick={() =>
-                        setSelectedLines((prevSelectedLines) =>
-                          prevSelectedLines.filter(
-                            (line) => line !== selectedLine
-                          )
-                        )
-                      }
-                    >
-                      x
-                    </button>
-                    {selectedLine.replace(`${name}: `, "")}
-                  </p>
-                ))}
+              {linesByNames[name]?.map((selectedLine, i) => (
+                <p key={i} className="text-[1rem] mb-[1rem]">
+                  {selectedLine}
+                </p>
+              ))}
             </li>
           ))}
         </ul>
@@ -132,16 +112,17 @@ const NextPage: React.FC = () => {
             ))}
           </div>
         )}
+        
         {/* Continue button */}
-      <div className="pl-[5rem] mt-[4rem]">
-        <button
-          onClick={handleContinue}
-          className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
-        >
-          Continue
-          <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
-        </button>
-      </div>
+        <div className="pl-[5rem] mt-[4rem]">
+          <button
+            onClick={handleContinue}
+            className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+          >
+            Continue
+            <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
+          </button>
+        </div>
       </div>
     </div>
   );
