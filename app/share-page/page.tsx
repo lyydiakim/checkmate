@@ -1,7 +1,14 @@
 "use client";
 // app/share-page/page.tsx
-import html2pdf from 'html2pdf.js';
+// import html2pdf from 'html2pdf.js';
 import { useState, useEffect } from 'react';
+import 'global';
+let html2pdfModule: Promise<{ default: any }> | undefined;
+
+if (typeof window !== 'undefined') {
+  // Dynamically import html2pdf.js only on the client side
+  html2pdfModule = import('html2pdf.js');
+}
 
 const SharePage: React.FC = () => {
   const [parsedReceipt, setParsedReceipt] = useState<string[]>([]);
@@ -25,7 +32,7 @@ const SharePage: React.FC = () => {
     }
   }, []);
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     const content = document.getElementById('parsedReceipt');
 
     if (content) {
@@ -62,8 +69,20 @@ const SharePage: React.FC = () => {
         pdfContent.appendChild(ulElement);
       });
 
-      // Generate PDF from the combined content
-      html2pdf().from(pdfContent).set(pdfOptions).save();
+      // Ensure html2pdfModule is defined
+    if (html2pdfModule) {
+      try {
+        const html2pdf = (await html2pdfModule).default;
+
+        if (html2pdf) {
+          html2pdf().from(pdfContent).set(pdfOptions).save();
+        } else {
+          console.error('html2pdf.js is not available');
+        }
+      } catch (error) {
+        console.error('Failed to load html2pdf.js', error);
+      }
+    }
     }
   };
 
