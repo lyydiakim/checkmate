@@ -3,32 +3,32 @@ import React, { useEffect, useState } from "react";
 import { ChevronRightCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-// Your Next.js page component
 const NextPage: React.FC = () => {
-  // State to store the retrieved names
+  // store the retrieved names
   const [retrievedNames, setRetrievedNames] = useState<string[]>([]);
-  // State for storing OCR result
+
+  // store OCR result
   const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
+ 
   // State to store the lines associated with each name
   const [linesByNames, setLinesByNames] = useState<{ [key: string]: string[] }>({});
+  
   // State to store the currently selected name
   const [selectedName, setSelectedName] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Retrieve names array
+    // retrieve names array
     const storedNames = sessionStorage.getItem("names");
 
     if (storedNames) {
-      // Parse the JSON string back to an array
       const parsedNames = JSON.parse(storedNames);
       setRetrievedNames(parsedNames);
     }
 
-    // Retrieve tesseract results
+    // retrieve tesseract results
     const storedOCR = sessionStorage.getItem("ocrResult");
     if (storedOCR) {
-      // Parse the JSON string back to a string
       const ocrOutput = JSON.parse(storedOCR);
       setRetrievedOCR(ocrOutput);
     }
@@ -42,12 +42,14 @@ const NextPage: React.FC = () => {
         ...prevLinesByNames,
         [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
       }));
+    } else {
+      // if no name is clicked
+      setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
     }
   };
 
-  // Function to handle name selection
+  //  handle name selection
   const handleNameClick = (name: string) => {
-    // Set the selected name
     setSelectedName(name);
   };
 
@@ -96,6 +98,7 @@ const NextPage: React.FC = () => {
           ))}
         </ul>
 
+        {/* Display OCR from split page */}
         {retrievedOCR && (
           <div className=" ml-[4rem]">
             <p className="text-[1.5rem] mb-[1.5rem] font-bold">
