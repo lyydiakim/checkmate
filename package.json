@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "@types/tesseract.js": "^2.0.0",
     "@videsk/tailwind-random-color": "^0.2.0-beta",
     "framer-motion": "^10.16.4",
@@ -30,6 +31,5 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
-
   }
 }

@@ -52,7 +52,11 @@ const NextPage: React.FC = () => {
 
   return (
     <div className="text-white m-10 mt-[6rem]">
-      <h1 className="text-[2.5rem] flex justify justify-center">
+      <h1
+        className="text-[2.5rem] flex justify justify-center
+      max-sm:text-center
+      "
+      >
         Let's Assign The Receipt Items!
       </h1>
       <p className="text-[1rem] text-center flex justify justify-center text-gray-300">
@@ -61,7 +65,7 @@ const NextPage: React.FC = () => {
       </p>
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
-        <ul className="flex flex-wrap h-[20%]">
+        <ul className="flex flex-wrap w-[55%] h-[20%]">
           {/*height may be wrong*/}
           {retrievedNames.map((name, index) => (
             <li
@@ -105,7 +109,11 @@ const NextPage: React.FC = () => {
         {/* Display OCR from split page */}
         {retrievedOCR && (
           <div className=" ml-[4rem]">
-            <p className="text-[1.5rem] mb-[1.5rem] font-bold">
+            <p
+              className="text-[1.5rem] mb-[1.5rem] font-bol
+            max-sm:w-[100%]
+            "
+            >
               Receipt Items:
             </p>
             {retrievedOCR.split("\n").map((line, index) => (
