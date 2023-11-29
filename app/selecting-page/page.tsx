@@ -42,6 +42,7 @@ const NextPage: React.FC = () => {
         ...prevLinesByNames,
         [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
       }));
+    }
   };
 
   // Function to handle name selection
@@ -112,7 +113,7 @@ const NextPage: React.FC = () => {
           </div>
         )}
         
-        {/* Continue button */}
+        /* Continue button */
         <div className="pl-[5rem] mt-[4rem]">
           <button
             onClick={handleContinue}
