@@ -113,7 +113,7 @@ const NextPage: React.FC = () => {
           </div>
         )}
         
-        /* Continue button */
+        {/* Continue button */}
         <div className="pl-[5rem] mt-[4rem]">
           <button
             onClick={handleContinue}
