@@ -42,9 +42,6 @@ const NextPage: React.FC = () => {
         ...prevLinesByNames,
         [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
       }));
-    } else {
-      // if no name is clicked
-      setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
     }
   };
 
