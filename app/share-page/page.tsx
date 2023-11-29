@@ -108,6 +108,4 @@ const SharePage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default SharePage;
+}

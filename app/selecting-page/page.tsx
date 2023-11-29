@@ -42,7 +42,6 @@ const NextPage: React.FC = () => {
         ...prevLinesByNames,
         [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
       }));
-    }
   };
 
   // Function to handle name selection

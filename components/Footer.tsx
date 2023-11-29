@@ -30,8 +30,6 @@ export default function Footer() {
             contact@checkmates.com
           </p>
           <Link href="../about">About Us</Link>
-          <br></br>
-          <Link href="../share-page" passHref>Share Page</Link>
         </div>
       </div>
     </div>
