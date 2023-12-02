@@ -49,6 +49,10 @@ export default function SplitPage() {
     setRandomColors(colors);
   }, [numPeople]);
 
+  React.useEffect(()=>{
+    sessionStorage.setItem("names", JSON.stringify(names));
+  },[names])
+
   // event handler to update the user's inputted names
   const handleNameChange = (index: number, newName: string) => {
     const updatedNames = [...names];

@@ -34,11 +34,11 @@ const NextPage: React.FC = () => {
       const parsedNames = JSON.parse(storedNames);
       setRetrievedNames(parsedNames);
     }
-    // const storedOCR = sessionStorage.getItem("ocrResult");
-    // if (storedOCR) {
-    //   const parsedOutput = JSON.parse(storedOCR);
-    //   setItemPrice(parsedOutput);
-    // }
+    const storedOCR = sessionStorage.getItem("ocrResult");
+    if (storedOCR) {
+      const parsedOutput = JSON.parse(storedOCR);
+      setItemPrice(parsedOutput);
+    }
   }, []);
 
   React.useEffect(() => {
