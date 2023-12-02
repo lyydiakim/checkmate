@@ -1,51 +1,90 @@
 "use client";
 import { useEffect, useState } from "react";
+import * as React from 'react';
+
+interface Item {
+  price: string;
+  splitBetween: number;
+}
+
+interface NameList {
+  [name: string]: {
+    [itemName: string]: number;
+  };
+}
+
+type ItemMap = Record<string, Record<string, number>>;
 
 const NextPage: React.FC = () => {
-  // store the retrieved names
   const [retrievedNames, setRetrievedNames] = useState<string[]>([]);
-
-  // store OCR result
-  const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
-
-  // store the selected reciept items
-  const [selectedLines, setSelectedLines] = useState<string[]>([]);
-
-  // store the currently selected name
+  const [itemPrice, setItemPrice] = React.useState<Record<string, Item>>({});
+  const [nameList, setNameList] = React.useState<NameList>({});
+  const [nameTotals, setNameTotals] = React.useState<Record<string, number>>({});
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
   useEffect(() => {
     // retrieve names array
     const storedNames = sessionStorage.getItem("names");
-
     if (storedNames) {
       const parsedNames = JSON.parse(storedNames);
       setRetrievedNames(parsedNames);
     }
-
-    // retrieve tesseract results
     const storedOCR = sessionStorage.getItem("ocrResult");
     if (storedOCR) {
-      const ocrOutput = JSON.parse(storedOCR);
-      setRetrievedOCR(ocrOutput);
+      const parsedOutput = JSON.parse(storedOCR);
+      setItemPrice(parsedOutput);
     }
   }, []);
+  React.useEffect(() => {
+    const initNames : ItemMap = {};
+    const initTotals : Record<string, number> = {};
+    retrievedNames.forEach((name) => {
+      initNames[name] = {};
+      initTotals[name] = 0;
+    });
+    setNameTotals(initTotals);
+    setNameList(initNames);
+  }, [retrievedNames]);
+
+  React.useEffect(() => {
+    const newTotals: Record<string, number> = {};
+    Object.keys(nameList).forEach(name => {
+      let total = 0;
+      Object.keys(nameList[name]).forEach(item => {
+        if (itemPrice[item]) {
+          total += parseFloat(itemPrice[item].price) / itemPrice[item].splitBetween;
+        }
+      });
+      newTotals[name] = total;
+    });
+    setNameTotals(newTotals);
+  }, [nameList, itemPrice]);
 
   // Function to handle line selection
-  const handleLineClick = (line: string) => {
+  const handleLineClick = (name: string) => {
     if (selectedName) {
+      if (nameList[selectedName][name]) {
+        return;
+      }
       // once name is clicked, add the reciept item under that name
-      setSelectedLines((prevSelectedLines) => [
-        ...prevSelectedLines,
-        `${selectedName}: ${line}`,
-      ]);
-    } else {
-      // if no name is clicked
-      setSelectedLines((prevSelectedLines) => [...prevSelectedLines, line]);
+      const tempNameList = {...nameList};
+      tempNameList[selectedName][name] = Number(itemPrice[name].price);
+      setNameList(tempNameList);
+      itemPrice[name].splitBetween += 1;
     }
   };
 
-  //  handle name selection
+  const removeFromNameList = (name: string, itemName: string) => {
+    setNameList(prevNameList => {
+      const updatedList = { ...prevNameList };
+      if (updatedList[name] && updatedList[name][itemName]) {
+        delete updatedList[name][itemName];
+      }
+      return updatedList;
+    });
+    itemPrice[itemName].splitBetween -= 1;
+  };
+
   const handleNameClick = (name: string) => {
     setSelectedName(name);
   };
@@ -83,31 +122,29 @@ const NextPage: React.FC = () => {
                 Assign {name}'s Items
               </p>
               {/* Display the selected lines under the corresponding heading */}
-              {selectedLines
-                .filter((selectedLine) => selectedLine.startsWith(`${name}:`))
-                .map((selectedLine, i) => (
-                  <p key={i} className="text-[1rem] mb-[1rem]">
+
+              { nameList[name] &&
+                Object.entries(nameList[name]).map(([item,cost],index) => (
+                  <p key={index} className="text-[1rem] mb-[1rem]">
                     <button
                       className="mr-2 text-red-500"
-                      onClick={() =>
-                        setSelectedLines((prevSelectedLines) =>
-                          prevSelectedLines.filter(
-                            (line) => line !== selectedLine
-                          )
-                        )
-                      }
+                      onClick={() => removeFromNameList(name, item)}
                     >
                       x
                     </button>
-                    {selectedLine.replace(`${name}: `, "")}
+                    {item} : ${Math.ceil((cost / itemPrice[item].splitBetween)*100)/100}
                   </p>
-                ))}
+                ))
+              }
+              <p className="text-[1rem] mb-[1rem]">
+                Total: ${Math.ceil(nameTotals[name]*100)/100}
+              </p>
             </li>
           ))}
         </ul>
 
         {/* Display OCR from split page */}
-        {retrievedOCR && (
+        {itemPrice && (
           <div className=" ml-[4rem]">
             <p
               className="text-[1.5rem] mb-[1.5rem] font-bol
@@ -116,15 +153,13 @@ const NextPage: React.FC = () => {
             >
               Receipt Items:
             </p>
-            {retrievedOCR.split("\n").map((line, index) => (
-              <p
-                key={index}
-                className="text-[1rem] cursor-pointer mb-[1rem]"
-                onClick={() => handleLineClick(line)}
-              >
-                {line}
-              </p>
-            ))}
+            {
+              Object.entries(itemPrice).map(([itemName, itemDetails], index) => (
+                <p key={index} className="text-[1rem] cursor-pointer mb-[1rem]" onClick={() => handleLineClick(`${itemName}`)}>
+                  {itemName} : ${itemDetails.price}
+                </p>
+              ))
+            }
           </div>
         )}
       </div>
