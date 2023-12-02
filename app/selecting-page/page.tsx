@@ -21,7 +21,6 @@ const NextPage: React.FC = () => {
   const [nameList, setNameList] = React.useState<NameList>({});
   const [nameTotals, setNameTotals] = React.useState<Record<string, number>>({});
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     // retrieve names array
@@ -90,14 +89,6 @@ const NextPage: React.FC = () => {
     setSelectedName(name);
   };
 
-  const handleContinue = () => {
-    // Save linesByNames to sessionStorage
-    sessionStorage.setItem('linesByNames', JSON.stringify(linesByNames));
-
-    // Navigate to the SharePage
-    router.push('/share-page');
-  };
-
   return (
     <div className="text-white m-10 mt-[6rem]">
       <h1 className="text-[2.5rem] flex justify justify-center">
@@ -110,6 +101,7 @@ const NextPage: React.FC = () => {
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
         <ul className="flex flex-wrap h-[20%]">
+          {/*height may be wrong*/}
           {retrievedNames.map((name, index) => (
             <li
               className={`pb-[3rem] pr-[2rem] mb-[1rem] ${
@@ -143,7 +135,6 @@ const NextPage: React.FC = () => {
               <p className="text-[1rem] mb-[1rem]">
                 Total: ${Math.ceil(nameTotals[name]*100)/100}
               </p>
-
             </li>
           ))}
         </ul>
@@ -163,17 +154,6 @@ const NextPage: React.FC = () => {
             }
           </div>
         )}
-        
-        {/* Continue button */}
-        <div className="pl-[5rem] mt-[4rem]">
-          <button
-            onClick={handleContinue}
-            className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
-          >
-            Continue
-            <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
-          </button>
-        </div>
       </div>
     </div>
   );
