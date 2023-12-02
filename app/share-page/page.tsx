@@ -135,7 +135,7 @@ const SharePage: React.FC = () => {
             key={index}
             className="text-gray-200 mt-4 flex flex-col items-center"
           >
-            <div className="text-left w-full max-w-md text-center">
+            <div className="w-full max-w-md text-center">
               <h2
                 className="text-gray-200 font-bold"
                 style={{ whiteSpace: "pre-wrap" }}

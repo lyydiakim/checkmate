@@ -103,7 +103,7 @@ const NextPage: React.FC = () => {
   };
 
   return (
-    <div className="h-[100%] text-white m-10 mt-[6rem]">
+    <div className="h-screen text-white m-10 mt-[6rem]">
       <h1
         className="text-[2.5rem] flex justify justify-center
       max-sm:text-center

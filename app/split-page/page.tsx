@@ -1,15 +1,12 @@
 "use client";
-import Tesseract from "tesseract.js";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import Tesseract from "tesseract.js";
+// import { useRouter } from "next/navigation";
+
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
 import { ChevronRightCircle } from "lucide-react";
 import { LiaUserCircleSolid } from "react-icons/lia";
-
-interface Item {
-  price: string;
-  splitBetween: number;
-}
 
 const distinctColors = [
   // these colors are used to distinguish between users
@@ -35,13 +32,11 @@ const distinctColors = [
   "#FF6666",
 ];
 
-const SplitPage: React.FC = () => {
+export default function SplitPage() {
   //  const router = useRouter();
   const [numPeople, setNumPeople] = useState<number>(2); //set default number of people splitting to 2
   const [names, setNames] = useState<string[]>([]);
   const [randomColors, setRandomColors] = useState<string[]>([]);
-  const [imageURL, setImageURL] = useState<string | null>(null); // storing the image URL
-  const [itemPrice, setItemPrice] = useState<Record<string, Item>>({}); // storing the items from the receipt
 
   useEffect(() => {
     // make sure numPeople is non-negative
@@ -66,50 +61,8 @@ const SplitPage: React.FC = () => {
     setNames((prevNames) => prevNames.slice(0, numPeople));
   }, [numPeople]);
 
-  React.useEffect(() => {
-    sessionStorage.setItem("ocrResult", JSON.stringify(itemPrice));
-    sessionStorage.setItem("names", JSON.stringify(names));
-  }, [itemPrice, names]);
-
-  const removeFromDict = (itemName: string) => {
-    setItemPrice((prev) => {
-      const updatedList = { ...prev };
-      if (updatedList[itemName]) {
-        delete updatedList[itemName];
-      }
-      return updatedList;
-    });
-  };
-
-  const handleNewEntry = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const target = e.target as HTMLInputElement;
-      const inputParts = target.value.split(":").map((part) => part.trim());
-      if (inputParts.length != 2) {
-        alert("Invalid input. Please enter in the format: Item Name : Price");
-        return;
-      }
-      const name = inputParts[0];
-      if (name in itemPrice) {
-        alert(
-          "Item already exists in the list. Please give a unique name or remove the item first."
-        );
-        return;
-      }
-      const price = inputParts[1];
-      setItemPrice({
-        ...itemPrice,
-        [name]: {
-          price: price,
-          splitBetween: 0,
-        },
-      });
-      target.value = "";
-    }
-  };
-
   return (
-    <div className="text-white pt-[6rem] m-10 flex flex-row justify justify-center">
+    <div className="text-white pt-[6rem] h-screen m-10 flex flex-row justify justify-center">
       <div className="">
         <p className="inline-flex  text-[2rem] font-bold ">
           How many people are splitting this receipt?{" "}
@@ -170,6 +123,4 @@ const SplitPage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default SplitPage;
+}

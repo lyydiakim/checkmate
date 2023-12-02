@@ -97,9 +97,9 @@ export default function OcrPage() {
   };
 
   return (
-    <div className="text-white pt-[6rem] m-10 mx-4 flex flex-wrap justify justify-center">
-      <p className=" text-center text-[3rem] w-[100%] mb-10 ">
-        Make sure the reciept items have been read correctly.
+    <div className="text-white h-screen pt-[7rem] flex flex-wrap justify justify-center">
+      <p className=" text-center text-[3rem] w-[100%]  ">
+        Make sure the reciept items have been correctly.
       </p>
 
       <div>
@@ -110,7 +110,7 @@ export default function OcrPage() {
             src={imageURL}
             alt="Uploaded File From User"
             style={{
-              width: "300px",
+              width: "350px",
               height: "auto",
               border: "2px solid #333",
               display: "flex",
@@ -121,7 +121,7 @@ export default function OcrPage() {
 
       {/* display OCR result */}
       {ocrResult && (
-        <div className=" mx-4">
+        <div className=" mx-10">
           <p className="text-[2rem] mb-[0.5rem] font-bold">
             Reciept Items Read:
           </p>
