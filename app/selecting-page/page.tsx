@@ -1,61 +1,92 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { ChevronRightCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import * as React from 'react';
+
+interface Item {
+  price: string;
+  splitBetween: number;
+}
+
+interface NameList {
+  [name: string]: {
+    [itemName: string]: number;
+  };
+}
+
+type ItemMap = Record<string, Record<string, number>>;
 
 const NextPage: React.FC = () => {
-  // store the retrieved names
   const [retrievedNames, setRetrievedNames] = useState<string[]>([]);
-
-  // store OCR result
-  const [retrievedOCR, setRetrievedOCR] = useState<string | null>(null);
- 
-  // State to store the lines associated with each name
-  const [linesByNames, setLinesByNames] = useState<{ [key: string]: string[] }>({});
-  
-  // State to store the currently selected name
+  const [itemPrice, setItemPrice] = React.useState<Record<string, Item>>({});
+  const [nameList, setNameList] = React.useState<NameList>({});
+  const [nameTotals, setNameTotals] = React.useState<Record<string, number>>({});
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     // retrieve names array
     const storedNames = sessionStorage.getItem("names");
-
     if (storedNames) {
       const parsedNames = JSON.parse(storedNames);
       setRetrievedNames(parsedNames);
     }
-
-    // retrieve tesseract results
     const storedOCR = sessionStorage.getItem("ocrResult");
     if (storedOCR) {
-      const ocrOutput = JSON.parse(storedOCR);
-      setRetrievedOCR(ocrOutput);
+      const parsedOutput = JSON.parse(storedOCR);
+      setItemPrice(parsedOutput);
     }
   }, []);
+  React.useEffect(() => {
+    const initNames : ItemMap = {};
+    const initTotals : Record<string, number> = {};
+    retrievedNames.forEach((name) => {
+      initNames[name] = {};
+      initTotals[name] = 0;
+    });
+    setNameTotals(initTotals);
+    setNameList(initNames);
+  }, [retrievedNames]);
+
+  React.useEffect(() => {
+    const newTotals: Record<string, number> = {};
+    Object.keys(nameList).forEach(name => {
+      let total = 0;
+      Object.keys(nameList[name]).forEach(item => {
+        if (itemPrice[item]) {
+          total += parseFloat(itemPrice[item].price) / itemPrice[item].splitBetween;
+        }
+      });
+      newTotals[name] = total;
+    });
+    setNameTotals(newTotals);
+  }, [nameList, itemPrice]);
 
   // Function to handle line selection
-  const handleLineClick = (line: string) => {
+  const handleLineClick = (name: string) => {
     if (selectedName) {
-      // If a name is selected, add the line under that name
-      setLinesByNames((prevLinesByNames) => ({
-        ...prevLinesByNames,
-        [selectedName]: [...(prevLinesByNames[selectedName] || []), line],
-      }));
+      if (nameList[selectedName][name]) {
+        return;
+      }
+      // once name is clicked, add the reciept item under that name
+      const tempNameList = {...nameList};
+      tempNameList[selectedName][name] = Number(itemPrice[name].price);
+      setNameList(tempNameList);
+      itemPrice[name].splitBetween += 1;
     }
   };
 
-  //  handle name selection
-  const handleNameClick = (name: string) => {
-    setSelectedName(name);
+  const removeFromNameList = (name: string, itemName: string) => {
+    setNameList(prevNameList => {
+      const updatedList = { ...prevNameList };
+      if (updatedList[name] && updatedList[name][itemName]) {
+        delete updatedList[name][itemName];
+      }
+      return updatedList;
+    });
+    itemPrice[itemName].splitBetween -= 1;
   };
 
-  const handleContinue = () => {
-    // Save linesByNames to sessionStorage
-    sessionStorage.setItem('linesByNames', JSON.stringify(linesByNames));
-
-    // Navigate to the SharePage
-    router.push('/share-page');
+  const handleNameClick = (name: string) => {
+    setSelectedName(name);
   };
 
   return (
@@ -70,6 +101,7 @@ const NextPage: React.FC = () => {
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
         <ul className="flex flex-wrap h-[20%]">
+          {/*height may be wrong*/}
           {retrievedNames.map((name, index) => (
             <li
               className={`pb-[3rem] pr-[2rem] mb-[1rem] ${
@@ -86,43 +118,42 @@ const NextPage: React.FC = () => {
                 Assign {name}'s Items
               </p>
               {/* Display the selected lines under the corresponding heading */}
-              {linesByNames[name]?.map((selectedLine, i) => (
-                <p key={i} className="text-[1rem] mb-[1rem]">
-                  {selectedLine}
-                </p>
-              ))}
+
+              { nameList[name] &&
+                Object.entries(nameList[name]).map(([item,cost],index) => (
+                  <p key={index} className="text-[1rem] mb-[1rem]">
+                    <button
+                      className="mr-2 text-red-500"
+                      onClick={() => removeFromNameList(name, item)}
+                    >
+                      x
+                    </button>
+                    {item} : ${Math.ceil((cost / itemPrice[item].splitBetween)*100)/100}
+                  </p>
+                ))
+              }
+              <p className="text-[1rem] mb-[1rem]">
+                Total: ${Math.ceil(nameTotals[name]*100)/100}
+              </p>
             </li>
           ))}
         </ul>
 
         {/* Display OCR from split page */}
-        {retrievedOCR && (
+        {itemPrice && (
           <div className=" ml-[4rem]">
             <p className="text-[1.5rem] mb-[1.5rem] font-bold">
               Receipt Items:
             </p>
-            {retrievedOCR.split("\n").map((line, index) => (
-              <p
-                key={index}
-                className="text-[1rem] cursor-pointer mb-[1rem]"
-                onClick={() => handleLineClick(line)}
-              >
-                {line}
-              </p>
-            ))}
+            {
+              Object.entries(itemPrice).map(([itemName, itemDetails], index) => (
+                <p key={index} className="text-[1rem] cursor-pointer mb-[1rem]" onClick={() => handleLineClick(`${itemName}`)}>
+                  {itemName} : ${itemDetails.price}
+                </p>
+              ))
+            }
           </div>
         )}
-        
-        {/* Continue button */}
-        <div className="pl-[5rem] mt-[4rem]">
-          <button
-            onClick={handleContinue}
-            className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
-          >
-            Continue
-            <ChevronRightCircle size={20} className="inline mb-1 ml-2" />
-          </button>
-        </div>
       </div>
     </div>
   );

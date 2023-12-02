@@ -3,10 +3,15 @@
 // uploaded image is saved in session storage under fileURL and tesseract stuff saved under ocrResult
 "use client";
 import Tesseract from "tesseract.js";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRightCircle } from "lucide-react";
+
+interface Item {
+  price: string;
+  splitBetween: number;
+}
 
 const distinctColors = [
   // these colors are used to distinguish between users
@@ -39,6 +44,7 @@ const SplitPage: React.FC = () => {
   const [randomColors, setRandomColors] = useState<string[]>([]);
   const [imageURL, setImageURL] = useState<string | null>(null); // storing the image URL
   const [ocrResult, setOcrResult] = useState<string | null>(null); // storing OCR result
+  const [itemPrice, setItemPrice] = useState<Record<string, Item>>({}); // storing the items from the receipt
 
   // event handler for radio button (split evenly / unevenly)
   const [selectedOption, setSelectedOption] = useState("");
@@ -65,16 +71,27 @@ const SplitPage: React.FC = () => {
         { logger: (info) => console.log(info) } // can see the progress in the console
       ).then(({ data }) => {
         setOcrResult(data.text); //setting ocrResult here!!
-        sessionStorage.setItem("ocrResult", data.text); //store the ocrResult to use on selecting-page
       });
     }
   }, []);
 
   useEffect(() => {
-    // Save names array + OCR in sessionStorage so that you can use the names on the next page
-    sessionStorage.setItem("names", JSON.stringify(names));
-    sessionStorage.setItem("ocrResult", JSON.stringify(ocrResult));
-  }, [names, ocrResult]);
+    if (ocrResult) {
+      const lines = ocrResult.split("\n");
+      const pricePattern = /(.*)\s(\-?\d+\.\d{2}).*$/;
+      const filteredLines = lines.filter((line: any) => pricePattern.test(line));
+      const itemsDict: Record<string, Item> = {}
+      filteredLines.forEach((line:any) => {
+        const match = line.match(pricePattern);
+        if (match) {
+          const itemName = match[1];
+          const itemPrice = match[2];
+          itemsDict[itemName] = {price:itemPrice, splitBetween: 0};
+        }
+      });
+      setItemPrice(itemsDict);
+    }
+  }, [ocrResult]);
 
   useEffect(() => {
     // make sure numPeople is non-negative
@@ -99,6 +116,46 @@ const SplitPage: React.FC = () => {
     setNames((prevNames) => prevNames.slice(0, numPeople));
   }, [numPeople]);
 
+  React.useEffect(() => {
+    sessionStorage.setItem("ocrResult", JSON.stringify(itemPrice));
+    sessionStorage.setItem("names", JSON.stringify(names));
+  },[itemPrice,names]);
+
+  const removeFromDict = (itemName: string) => {
+    setItemPrice(prev => {
+      const updatedList = { ...prev };
+      if (updatedList[itemName]) {
+        delete updatedList[itemName];
+      }
+      return updatedList;
+    });
+  };
+
+  const handleNewEntry = (e : React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter'){
+        const target = e.target as HTMLInputElement;
+        const inputParts = target.value.split(':').map(part => part.trim());
+        if (inputParts.length != 2) {
+          alert('Invalid input. Please enter in the format: Item Name : Price');
+          return;
+        }
+        const name = inputParts[0];
+        if (name in itemPrice) {
+          alert('Item already exists in the list. Please give a unique name or remove the item first.');
+          return;
+        }
+        const price = inputParts[1];
+        setItemPrice({ 
+            ...itemPrice, 
+            [name]: {
+                price: price,
+                splitBetween: 0
+            },
+        });
+        target.value = '';
+    }
+}
+
   return (
     <div className="text-white pt-[6rem] m-10 flex flex-row">
       <div className="mx-4">
@@ -121,17 +178,28 @@ const SplitPage: React.FC = () => {
       {/* display OCR result */}
       {ocrResult && (
         <div className="w-[25%] mx-4">
-          <p className="text-[2rem] mb-[1.5rem] font-bold">OCR Result:</p>
-          {ocrResult.split("\n").map(
-            (
-              line,
-              index //display each receipt item on new line
-            ) => (
+          <p className="text-[2rem] mb-[0.5rem] font-bold">OCR Result:</p>
+          <p className="text-[1rem] mb-[0.5rem] text-gray-400">Remove items by pressing "X" to the left of them.</p>
+          {
+            Object.entries(itemPrice).map(([item,details], index) => (
               <p key={index} className="text-[1rem]">
-                {line}
+                <button
+                  className="mr-2 text-red-500"
+                  onClick={() => removeFromDict(item)}
+                >
+                  x
+                </button>
+                {item} : ${details.price}
               </p>
-            )
-          )}
+            ))
+          }
+          <p className="text-[1rem] mt-[1rem] font-bold">Enter new items here:</p>
+          <p className="text-[1rem] text-gray-400">Use format: 'Item Name' : 'Price'</p>
+          <input 
+            onKeyDown={(e) => handleNewEntry(e)} 
+            placeholder="Item Name : Price"
+            style={{ color: 'black', padding:'0.2rem' }}  // Inline CSS for text color
+          ></input>
         </div>
       )}
 
