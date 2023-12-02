@@ -60,6 +60,12 @@ const NextPage: React.FC = () => {
     setNameTotals(newTotals);
   }, [nameList, itemPrice]);
 
+  React.useEffect(() => {
+    sessionStorage.setItem("nameList", JSON.stringify(nameList));
+    sessionStorage.setItem("itemPrice", JSON.stringify(itemPrice));
+    sessionStorage.setItem("nameTotals", JSON.stringify(nameTotals));
+  },[nameList,itemPrice,nameTotals])
+
   // Function to handle line selection
   const handleLineClick = (name: string) => {
     if (selectedName) {
@@ -163,6 +169,10 @@ const NextPage: React.FC = () => {
           </div>
         )}
       </div>
+      <button 
+        className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+        onClick={() => window.location.href = '/share-page'}
+      >Continue to Export Page</button>
     </div>
   );
 };
