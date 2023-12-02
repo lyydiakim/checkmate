@@ -19,7 +19,7 @@ export default function UploadImage() {
 
       sessionStorage.setItem("fileUrl", fileUrl); //save img to session storage to use on next pages
 
-      router.push("/split-page"); //redirect to split page once image is uploaded & image url created
+      router.push("/ocr-page"); //redirect to split page once image is uploaded & image url created
     }
   }
 
