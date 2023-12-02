@@ -33,20 +33,6 @@ const NextPage: React.FC = () => {
     if (storedOCR) {
       const parsedOutput = JSON.parse(storedOCR);
       setItemPrice(parsedOutput);
-      // const ocrOutput = JSON.parse(storedOCR);
-      // const lines = ocrOutput.split("\n");
-      // const pricePattern = /(.*)\s(\-?\d+\.\d{2}).*$/;
-      // const filteredLines = lines.filter((line: any) => pricePattern.test(line));
-      // const itemsDict: Record<string, Item> = {}
-      // filteredLines.forEach((line:any) => {
-      //   const match = line.match(pricePattern);
-      //   if (match) {
-      //     const itemName = match[1];
-      //     const itemPrice = match[2];
-      //     itemsDict[itemName] = {price:itemPrice, splitBetween: 0};
-      //   }
-      // });
-      // setItemPrice(itemsDict);
     }
   }, []);
   React.useEffect(() => {
