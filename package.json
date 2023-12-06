@@ -25,7 +25,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "sharp": "^0.33.0",
-    "tesseract.js": "^5.0.3",
+    "tesseract.js": "^2.1.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
