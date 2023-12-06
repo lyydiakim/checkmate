@@ -97,12 +97,10 @@ export default function OcrPage() {
   };
 
   return (
-    <div className="text-white h-screen pt-[7rem] flex flex-wrap justify justify-center">
-      <p className=" text-center text-[3rem] w-[100%]  ">
-        Make sure the reciept items have been correctly.
-      </p>
+    <div className="text-white h-auto pt-[8rem] pb-[2.5rem] flex flex-wrap justify justify-center">
+      <p className="text-center text-[3rem] w-[100%] pb-4">Make sure the receipt items have been correctly scanned.</p>
 
-      <div>
+      <div className="flex flex-col min-h-max pb-[1rem]">
         <p className="text-[2rem] mb-[1.5rem] font-bold">Uploaded Image:</p>
 
         {imageURL && (
@@ -111,7 +109,7 @@ export default function OcrPage() {
             alt="Uploaded File From User"
             style={{
               width: "350px",
-              height: "auto",
+              height: "max",
               border: "2px solid #333",
               display: "flex",
             }}
@@ -123,7 +121,7 @@ export default function OcrPage() {
       {ocrResult && (
         <div className=" mx-10">
           <p className="text-[2rem] mb-[0.5rem] font-bold">
-            Reciept Items Read:
+            Receipt Items:
           </p>
           <p className="text-[1rem] mb-[0.5rem] text-gray-400">
             Remove items by pressing "X" to the left of them.
@@ -143,7 +141,7 @@ export default function OcrPage() {
             Enter new items here:
           </p>
           <p className="text-[1rem] text-gray-400">
-            Use format: 'Item Name' : 'Price'
+            Use format <i>Item Name</i> : <i>Price</i>
           </p>
           <div className="mb-10 flex">
             <input
