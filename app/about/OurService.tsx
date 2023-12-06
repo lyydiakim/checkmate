@@ -1,4 +1,5 @@
 import { LiaReceiptSolid } from "react-icons/lia";
+import Link from "next/link";
 
 export default function OurService() {
   return (
@@ -22,11 +23,9 @@ export default function OurService() {
           web app that scans your receipt and does all the math for you. Our
           product makes splitting receipts efficient, accurate, and fun!
           <br/><br/>
-          How to use:
+          New to CheckMate?
           <br/>
-          Uplaod a photo of your receipt and let us know who you're splitting with. 
-          You'll be able to assign each splitter to their items, unless you want to split your bill evenly. 
-          You'll get itemized lists of everyone's personal expenses and share the however you like!
+          Check out <Link href="../how-to" className="underline underline-offset-4 hover:text-[#99f6e4]">our tutorial!</Link>
         </p>
       </div>
     </div>

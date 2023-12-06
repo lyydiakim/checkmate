@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { BsArrowDownCircleFill } from "react-icons/bs";
 import React, { useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function UploadImage() {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
@@ -32,8 +33,10 @@ export default function UploadImage() {
         <title>OCR with Tesseract.js</title>
       </Head>
 
-      <div className="w-1/2 text-[4.5rem] px-[7rem] pt-[17rem] flex justify justify-center max-xl:text-[4rem] max-xl:px-[4.5rem] max-xl:pt-[25%] max-lg:px-[3.5rem] max-lg:pt-[30%] max-md:text-[3rem] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
-        <p>Make receipt splitting fun and efficient!</p>
+      <div className="w-1/2 px-[7rem] pt-[17rem] flex-col flex max-xl:px-[4.5rem] max-xl:pt-[25%] max-lg:px-[3.5rem] max-lg:pt-[30%] max-md:px-[2rem] max-md:w-[100%] max-md:text-center max-md:pt-[10rem]">
+        <p className="pt-0 text-[4.5rem] max-xl:text-[4rem] max-md:text-[3rem]">Make receipt splitting fun and efficient!</p>
+        <p className="pt-[2rem] text-3xl max-xl:text-2xl max-md:pt-[1.5rem] max-md:text-xl">Never used CheckMate before? Check out <Link 
+          href="../how-to" className="underline underline-offset-4 hover:text-[#99f6e4]">our tutorial!</Link></p>
       </div>
 
       <div className="w-1/2 h-1/5 pt-[25rem] flex-col flex justify justify-center max-xl:pt-[27rem] max-lg:pr-[2rem] max-md:pt-[5rem] max-md:w-[100%] max-md:ml-[1rem] max-md:pb-[7rem] max-md:max-h-min">
