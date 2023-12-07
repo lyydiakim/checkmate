@@ -7,6 +7,7 @@ import "global";
 let html2pdfModule: Promise<{ default: any }> | undefined;
 import { CopyToClipboard } from "react-copy-to-clipboard"; // Import the CopyToClipboard component
 import { format } from "path";
+import Confetti from 'react-confetti'
 
 if (typeof window !== "undefined") {
   // Dynamically import html2pdf.js only on the client side
@@ -25,6 +26,9 @@ interface NameList {
 }
 
 const SharePage: React.FC = () => {
+  const [showConfetti, setShowConfetti] = useState(true);
+  const [viewportDimensions, setViewportDimensions] = useState({ width: 0, height: 0 });
+  const [confettiOpacity, setConfettiOpacity] = useState(1);
   const [copied, setCopied] = useState(false); // State to track whether text is copied
   const [itemPrice, setItemPrice] = React.useState<Record<string, Item>>({});
   const [nameList, setNameList] = React.useState<NameList>({});
@@ -37,6 +41,50 @@ const SharePage: React.FC = () => {
     Array.from({ length: 10 }, () => false)
   );
 
+  useEffect(() => {
+    const updateDimensions = () => {
+      setViewportDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    // Set initial dimensions
+    updateDimensions();
+
+    // Event listener for window resize
+    window.addEventListener("resize", updateDimensions);
+
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fadeOutInterval = setInterval(() => {
+      setConfettiOpacity((prevOpacity) => {
+        if (prevOpacity > 0) {
+          return prevOpacity - 0.09; // Reduce opacity gradually
+        } else {
+          clearInterval(fadeOutInterval);
+          setShowConfetti(false); // Stop confetti after fade-out
+          return 0;
+        }
+      });
+    }, 500); // Adjust the interval for a smoother fade-out
+
+    const confettiTimer = setTimeout(() => {
+      clearInterval(fadeOutInterval);
+      setShowConfetti(false); // Stop confetti after a certain time (e.g., 5 seconds)
+    }, 3000); // Change 5000 to the duration you want in milliseconds
+
+    return () => {
+      clearInterval(fadeOutInterval);
+      clearTimeout(confettiTimer);
+    };
+   }, []);
+    
   useEffect(() => {
     // Retrieve lines by names from sessionStorage
     const getNameList = sessionStorage.getItem("nameList");
@@ -123,11 +171,21 @@ const SharePage: React.FC = () => {
   };
 
   return (
-    <div className="text-white m-10 mt-[6rem]">
+    <div>
+        {showConfetti && (
+        <Confetti
+          width={viewportDimensions.width}
+          height={viewportDimensions.height}
+          numberOfPieces={500} // Increase the number of confetti pieces
+          gravity={0.5} // Increase gravity for faster fall (adjust to your preference)
+          opacity={confettiOpacity} // Apply opacity dynamically
+        />
+      )}
+   <div className="text-white m-10 mt-[6rem]">
       <h1 className="text-teal text-[1.5rem] flex justify-center">
         Here's your receipt information based on your selection.
       </h1>
-
+      </div>
       {/* Lines by names content */}
       {nameList &&
         Object.keys(nameList).map((name, index) => (
@@ -176,25 +234,28 @@ const SharePage: React.FC = () => {
         ))}
 
       <br></br>
-      <div className="text-[1rem] flex justify-center">
+      <div className=" text-white text-[1rem] flex justify-center">
         <p>How would you like share this with your checkmates?</p>
       </div>
 
       {/* Buttons container */}
-      <div className="mt-4 flex justify-center space-x-4">
+      <div className="mt-4 flex justify-center space-x-4 mb-8">
         {/* Export as PDF button */}
         <button
           onClick={handleExportPDF}
-          className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+          className="text-white bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
         >
           Download as PDF
         </button>
+        <div>
+
+        </div>
 
         {/* Copy Lists button */}
         <CopyToClipboard text={"weeeeeeee"}>
           <button
             onClick={handleCopyLists}
-            className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
+            className="text-white bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
           >
             Copy Lists
           </button>
