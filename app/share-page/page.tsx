@@ -8,6 +8,9 @@ let html2pdfModule: Promise<{ default: any }> | undefined;
 import { CopyToClipboard } from "react-copy-to-clipboard"; // Import the CopyToClipboard component
 import { format } from "path";
 import Confetti from 'react-confetti'
+import jsPDF from 'jspdf';
+import logo from "@/public/images/logodmsans.png";
+import { useRouter } from 'next/navigation';
 
 if (typeof window !== "undefined") {
   // Dynamically import html2pdf.js only on the client side
@@ -35,6 +38,8 @@ const SharePage: React.FC = () => {
   const [nameTotals, setNameTotals] = React.useState<Record<string, number>>(
     {}
   );
+  const router = useRouter();
+
 
   // State variables to track copy status for each list
   const [copiedLists, setCopiedLists] = useState<boolean[]>(
@@ -132,21 +137,28 @@ const SharePage: React.FC = () => {
     jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
   };
 
-  const handleExportPDF = async () => {
-    const html2pdfModule = await import("html2pdf.js");
-    if (html2pdfModule) {
-      try {
-        const html2pdf = html2pdfModule.default;
-
-        if (html2pdf) {
-          const pdfContent = `<pre>${getTextContents()}</pre>`;
-          html2pdf().from(pdfContent).set(pdfOptions).save();
-        } else {
-          console.error("html2pdf.js is not available");
-        }
-      } catch (error) {
-        console.error("Failed to load html2pdf.js", error);
-      }
+  const handleExportPDF = () => {
+    try {
+      const pdf = new jsPDF();
+      const textContents = getTextContents();
+  
+      // Assuming you want to add text contents to the PDF
+      pdf.text(textContents, 10, 10);
+  
+      // Additional configurations can be set using pdf.set() method if needed
+      // Move to the bottom of the page
+      const offsetY = pdf.internal.pageSize.height - 20;
+      // Add your logo at the bottom
+      const imgWidth = 50; // Adjust the width of the logo
+      const imgHeight = (logo.height / logo.width) * imgWidth; // Adjust the height of the logo
+      // Get the image source using the src property
+      const logoSrc = logo.src;
+      pdf.addImage(logoSrc, 'PNG', 10, offsetY - imgHeight, imgWidth, imgHeight);
+  
+      // Save the PDF
+      pdf.save('checkmates.pdf');
+    } catch (error) {
+      console.error("Failed to generate PDF", error);
     }
   };
 
@@ -168,6 +180,13 @@ const SharePage: React.FC = () => {
         setCopiedLists(newCopiedLists);
       })
       .catch((error) => console.error("Copy failed:", error));
+  };
+   
+  // Button to handle navigation back to the landing page
+   const handleRestart = () => {
+    // Add any additional logic or cleanup if needed
+    // For now, navigate back to the landing page
+    router.push('/');
   };
 
   return (
@@ -261,6 +280,16 @@ const SharePage: React.FC = () => {
           </button>
         </CopyToClipboard>
         {copied && <p className="text-green-500">Lists copied to clipboard!</p>}
+      </div>
+
+       {/* Button to restart and upload another receipt */}
+       <div className="text-white mt-4 flex justify-center mb-8">
+        <button
+          onClick={handleRestart}
+          className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#2dd4bf] hover:animate-pulse text-lg p-2 rounded-md"
+        >
+          Upload Another Receipt
+        </button>
       </div>
     </div>
   );
