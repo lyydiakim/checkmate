@@ -9,27 +9,12 @@ import { ChevronRightCircle } from "lucide-react";
 import { LiaUserCircleSolid } from "react-icons/lia";
 
 const distinctColors = [
-  // these colors are used to distinguish between users
-  "#FF5733",
-  "#33FF57",
-  "#5733FF",
-  "#FFFF33",
-  "#33FFFF",
-  "#FF33FF",
-  "#FF6633",
-  "#33FFCC",
-  "#9966FF",
-  "#FFCC33",
-  "#33FF99",
-  "#FF3366",
-  "#3399FF",
-  "#FF9933",
-  "#33FF66",
-  "#6633FF",
-  "#FFCC66",
-  "#66FF33",
-  "#CC33FF",
-  "#FF6666",
+  // selecting colors to fit the aesthetic a bit better since distinction is not important at this point
+  "#b5e5d7",
+  "#beb5e5",
+  "#b5dbe5",
+  "#b5e5be",
+  "#b5c3e5"
 ];
 
 export default function SplitPage() {
@@ -66,7 +51,7 @@ export default function SplitPage() {
   }, [numPeople]);
 
   return (
-    <div className="text-white pt-[6rem] h-screen m-10 flex flex-row justify justify-center">
+    <div className="text-white pt-[6rem] h-auto m-10 flex flex-row justify justify-center">
       <div className="">
         <p className="inline-flex  text-[2rem] font-bold ">
           How many people are splitting this receipt?{" "}
@@ -95,8 +80,8 @@ export default function SplitPage() {
 
         <div className="mt-[3rem]">
           <p className="text-[2rem] mb-[3rem]">
-            Type in the names or initials of the people you are splitting this
-            reciept with.
+            Type in the names or aliases of each person you are splitting this
+            receipt with.
           </p>
           {/* Display input fields for each person */}
           {Array.from({ length: numPeople }).map((_, index) => (

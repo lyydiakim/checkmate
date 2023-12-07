@@ -79,7 +79,7 @@ const NextPage: React.FC = () => {
       if (nameList[selectedName][name]) {
         return;
       }
-      // once name is clicked, add the reciept item under that name
+      // once name is clicked, add the receipt item under that name
       const tempNameList = { ...nameList };
       tempNameList[selectedName][name] = Number(itemPrice[name].price);
       setNameList(tempNameList);
@@ -103,17 +103,14 @@ const NextPage: React.FC = () => {
   };
 
   return (
-    <div className="h-screen text-white m-10 mt-[6rem]">
+    <div className="h-auto min-h-screen text-white m-10 mt-[6rem]">
       <h1
         className="text-[2.5rem] flex justify justify-center
-      max-sm:text-center
-      "
-      >
+      max-sm:text-center">
         Let's Assign The Receipt Items!
       </h1>
-      <p className="text-[1rem] text-center flex justify justify-center text-gray-300">
-        First click on the name you want to assign. <br /> Then click on their
-        receipt items to list it under their name.
+      <p className="text-[1.25rem] text-center flex justify justify-center text-gray-300">
+        Click on a person, and then click on an item to add it to their individual receipt<br/>
       </p>
 
       <div className="flex flex-row text-gray-200  mt-[3rem]">
@@ -132,7 +129,7 @@ const NextPage: React.FC = () => {
                 }`}
                 onClick={() => handleNameClick(name)}
               >
-                Assign {name}'s Items
+                {name}'s Items
               </p>
               {/* Display the selected lines under the corresponding heading */}
 
@@ -179,7 +176,7 @@ const NextPage: React.FC = () => {
         className="bg-[#289ba158] border-2 border-[#9acbce] border-solid hover:bg-[#289ba11e] hover:animate-pulse text-2xl p-2 rounded-md"
         onClick={() => (window.location.href = "/share-page")}
       >
-        Continue to Export Page
+        Continue to Export
       </button>
     </div>
   );
